@@ -43,11 +43,6 @@
 			<version>3.0.7</version>
 		</dependency>
 		<dependency>
-			<groupId>com.aerospike</groupId>
-			<artifactId>aerospike-client</artifactId>
-			<version>6.1.11</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.avro</groupId>
 			<artifactId>avro</artifactId>
 			<version>1.9.1</version>
