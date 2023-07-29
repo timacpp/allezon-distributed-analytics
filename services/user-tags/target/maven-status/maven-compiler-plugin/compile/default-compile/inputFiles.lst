@@ -1,0 +1,9 @@
+/home/tima/distributed-shop/services/user-tags/src/main/java/com/allezon/kafka/KafkaEventsPublisher.java
+/home/tima/distributed-shop/services/user-tags/src/main/generated/java/com/allezon/domain/Product.java
+/home/tima/distributed-shop/services/user-tags/src/main/java/com/allezon/UserTagsApplication.java
+/home/tima/distributed-shop/services/user-tags/src/main/generated/java/com/allezon/domain/ActionType.java
+/home/tima/distributed-shop/services/user-tags/src/main/java/com/allezon/UserTagsEventsPublisher.java
+/home/tima/distributed-shop/services/user-tags/src/main/java/com/allezon/UserTagsService.java
+/home/tima/distributed-shop/services/user-tags/src/main/generated/java/com/allezon/domain/UserTag.java
+/home/tima/distributed-shop/services/user-tags/src/main/java/com/allezon/UserTagsController.java
+/home/tima/distributed-shop/services/user-tags/src/main/generated/java/com/allezon/domain/DeviceType.java

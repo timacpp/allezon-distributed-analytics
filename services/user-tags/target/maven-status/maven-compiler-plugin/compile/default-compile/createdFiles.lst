@@ -1,0 +1,11 @@
+com/allezon/domain/Product.class
+com/allezon/domain/UserTag.class
+com/allezon/kafka/KafkaEventsPublisher.class
+com/allezon/UserTagsController.class
+com/allezon/domain/ActionType.class
+com/allezon/UserTagsEventsPublisher.class
+com/allezon/UserTagsApplication.class
+com/allezon/domain/UserTag$Builder.class
+com/allezon/UserTagsService.class
+com/allezon/domain/Product$Builder.class
+com/allezon/domain/DeviceType.class
