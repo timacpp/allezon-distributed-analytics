@@ -1,4 +1,4 @@
-FROM maven:3.9.3-eclipse-temurin-20
+FROM openjdk:20-bullseye
 
 ENV VERSION=1.1.5
 ENV PACKAGE_NAME=spring-cloud-schema-registry-server
