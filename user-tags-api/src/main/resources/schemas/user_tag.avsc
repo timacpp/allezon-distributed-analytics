@@ -1,0 +1,33 @@
+{"namespace": "com.allezon.domain",
+	"type": "record",
+	"name": "UserTag",
+	"fields": [
+		{"name": "time", "type": ["null", "string"]},
+		{"name": "cookie", "type": ["null", "string"]},
+		{"name": "country", "type": ["null", "string"]},
+		{"name": "device", "type": ["null", {
+			"type": "enum",
+			"name": "Device",
+			"symbols": ["PC", "MOBILE", "TV"]
+		}]},
+		{"name": "action", "type": ["null", {
+			"type": "enum",
+			"name": "Action",
+			"symbols": ["VIEW", "BUY"]
+		}]},
+		{"name": "origin", "type": ["null", "string"]},
+		{"name": "productInfo", "type": ["null", {
+			"type": "record",
+			"name": "ProductInfo",
+			"fields": [
+				{"name": "productId", "type": ["null", "string"],
+					"javaAnnotation": "com.fasterxml.jackson.annotation.JsonProperty(\"product_id\")"},
+				{"name": "brandId", "type": ["null", "string"],
+					"javaAnnotation": "com.fasterxml.jackson.annotation.JsonProperty(\"brand_id\")"},
+				{"name": "categoryId", "type": ["null", "string"],
+					"javaAnnotation": "com.fasterxml.jackson.annotation.JsonProperty(\"category_id\")"},
+				{"name": "price", "type": ["null", "int"]}
+			]
+		}], "javaAnnotation": "com.fasterxml.jackson.annotation.JsonProperty(\"product_info\")"}
+	]
+}
