@@ -1,0 +1,10 @@
+---
+- name: Schema registry deployment
+  any_errors_fatal: true
+  hosts: localhost
+  tasks:
+      - name: Building image
+        command: docker build . -t allezon-schema-registry:latest
+
+      - name: Starting container
+        command: docker run -d -p 8080:${SCHEMA_REGISTRY_PORT} allezon-schema-registry:latest
