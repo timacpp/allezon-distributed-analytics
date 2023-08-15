@@ -1,7 +1,7 @@
 # Aerospike database configuration file for use with systemd.
 
 service {
-	paxos-single-replica-limit 1 # Number of nodes where the replica count is automatically reduced to 1.
+	paxos-single-replica-limit 1
 	proto-fd-max 15000
 }
 
@@ -42,31 +42,14 @@ network {
 	}
 }
 
-mod-lua {
-    user-path /opt/aerospike/usr/udf/lua
-}
-
-namespace mimuw {
+namespace allezon {
 	replication-factor 2
 	memory-size 7G
-  nsup-period 15
+    nsup-period 15
 
-  stop-writes-pct 92
-  high-water-memory-pct 90
-  high-water-disk-pct 90
+    stop-writes-pct 92
+    high-water-memory-pct 90
+    high-water-disk-pct 90
 
 	storage-engine memory
-
-	# To use file storage backing, comment out the line above and use the
-	# following lines instead.
-	#storage-engine device {
-  #  filesize 6G
-	#	file /opt/aerospike/data/mimuw1.dat
-  #  file /opt/aerospike/data/mimuw2.dat
-  #  file /opt/aerospike/data/mimuw3.dat
-  #  file /opt/aerospike/data/mimuw4.dat
-	#
-  #  defrag-lwm-pct 90
-  #  defrag-sleep 50
-	#}
 }
