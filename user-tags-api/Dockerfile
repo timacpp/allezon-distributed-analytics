@@ -1,3 +1,7 @@
-FROM openjdk:20
-COPY target/user-tags-api-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT java -jar app.jar
+FROM maven/3.9.3-eclipse-temurin-20 as builder
+COPY src .
+ENTRYPOINT mvn spring-boot:run
+
+FROM eclipse-temurin
+COPY --from=builder src/target/user-tags-api.jar user-tags-api.jar
+ENTRYPOINT java -jar user-tags-api.jar

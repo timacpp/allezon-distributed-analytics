@@ -1,10 +1,13 @@
 package com.allezon.tags;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.allezon.tags.domain.UserTag;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +26,7 @@ public class UserTagsControllerIT {
 	private UserTagsEventsPublisher userTagsEventsPublisher;
 
 	@Test
-	void shouldAddUserTag() throws Exception {
+	void shouldPublishEventWhenAddingUserTag() throws Exception {
 		String userTagJson = """
 		{
 			"time": "2022-03-22T12:15:00.000Z",
@@ -45,6 +48,10 @@ public class UserTagsControllerIT {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());
 
-		verify(userTagsEventsPublisher).publish(any());
+		verify(userTagsEventsPublisher).publish(eq(userTagFromJson(userTagJson)));
+	}
+
+	private UserTag userTagFromJson(String json) throws JsonProcessingException {
+		return new ObjectMapper().readValue(json, UserTag.class);
 	}
 }
