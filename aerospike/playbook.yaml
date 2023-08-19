@@ -54,11 +54,3 @@
             state: started
             enabled: yes
             daemon_reload: yes
-
-      - name: Restart daemon on config change
-        become: true
-        become_user: root
-        systemd:
-            name: aerospike
-            state: restarted
-        when: service_conf.changed
