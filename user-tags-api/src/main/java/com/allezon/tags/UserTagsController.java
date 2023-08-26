@@ -1,6 +1,6 @@
 package com.allezon.tags;
 
-import com.allezon.tags.domain.UserTag;
+import com.allezon.domain.UserTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
