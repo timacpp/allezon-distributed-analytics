@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserTagController {
 
 	@Autowired
-	private UserTagEventsPublisher userTagEventsPublisher;
+	private UserTagEventPublisher userTagEventsPublisher;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)

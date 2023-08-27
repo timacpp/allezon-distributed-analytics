@@ -23,7 +23,7 @@ public class UserTagControllerIT {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private UserTagEventsPublisher userTagEventsPublisher;
+	private UserTagEventPublisher userTagEventsPublisher;
 
 	@Test
 	void shouldPublishEventWhenAddingUserTag() throws Exception {

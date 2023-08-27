@@ -9,8 +9,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserTagEventsPublisher {
-	private static final Logger logger = LoggerFactory.getLogger(UserTagEventsPublisher.class);
+public class UserTagEventPublisher {
+	private static final Logger logger = LoggerFactory.getLogger(UserTagEventPublisher.class);
 
 	@Value("${kafka.user-tags.topic}")
 	private String topic;
