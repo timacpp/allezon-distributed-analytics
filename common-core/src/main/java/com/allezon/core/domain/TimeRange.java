@@ -3,6 +3,8 @@ package com.allezon.core.domain;
 import java.time.Instant;
 
 public record TimeRange(Instant start, Instant end) {
+	public static final TimeRange ANY = new TimeRange(Instant.MIN, Instant.MAX);
+
 	public TimeRange(String timeRange) {
 		this(timeRange.split("_"));
 	}
