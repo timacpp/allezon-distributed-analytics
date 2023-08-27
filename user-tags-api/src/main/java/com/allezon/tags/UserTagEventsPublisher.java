@@ -1,6 +1,6 @@
 package com.allezon.tags;
 
-import com.allezon.domain.UserTag;
+import com.allezon.core.domain.UserTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserTagsEventsPublisher {
-	private static final Logger logger = LoggerFactory.getLogger(UserTagsEventsPublisher.class);
+public class UserTagEventsPublisher {
+	private static final Logger logger = LoggerFactory.getLogger(UserTagEventsPublisher.class);
 
 	@Value("${kafka.user-tags.topic}")
 	private String topic;
