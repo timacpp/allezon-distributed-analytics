@@ -16,15 +16,13 @@
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>20</java.version>
-		<domain.version>0.0.1</domain.version>
-		<aerospike-client.version>5.1.11</aerospike-client.version>
 		<spring-kafka.version>3.0.7</spring-kafka.version>
 		<jetty-server.version>11.0.15</jetty-server.version>
-		<spring-boot-maven-plugin.version>2.6.6</spring-boot-maven-plugin.version>
 	</properties>
 	<modules>
-		<module>../common-domain</module>
+		<module>../common-core</module>
 		<module>../user-tags-api</module>
+		<module>../user-profiles-api</module>
 	</modules>
 	<dependencies>
 		<dependency>
