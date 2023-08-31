@@ -1,5 +1,6 @@
 package com.allezon.core.domain;
 
+import java.time.Instant;
 import java.util.List;
 
 public record UserProfile(String cookie, List<UserTag> views, List<UserTag> buys) {
@@ -9,7 +10,7 @@ public record UserProfile(String cookie, List<UserTag> views, List<UserTag> buys
 
 	private static List<UserTag> filterTags(List<UserTag> tags, TimeRange timeRange, int limit) {
 		return tags.stream()
-				.filter(tag -> timeRange.includes(tag.time()))
+				.filter(tag -> timeRange.includes(Instant.parse(tag.time())))
 				.limit(limit)
 				.toList();
 	}
