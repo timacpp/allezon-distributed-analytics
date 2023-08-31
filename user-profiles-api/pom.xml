@@ -6,8 +6,8 @@
 		<groupId>com.allezon</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.1</version>
+		<relativePath>../parent-project</relativePath>
 	</parent>
-	<groupId>com.allezon</groupId>
 	<artifactId>user-profiles-api</artifactId>
 	<version>0.0.1</version>
 	<name>profiles</name>
