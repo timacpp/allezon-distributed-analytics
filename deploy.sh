@@ -6,11 +6,13 @@ set -eo pipefail
 function deploy {
   local container="allezon-$1"
   local image="$container:latest"
+  local tag="$DOCKER_REGISTRY/$image"
   docker build -t "$image" "$1"
+  docker tag "$image" "$tag"
   docker push "$DOCKER_REGISTRY"/"$image"
   for host in "${@:2}"; do
-    sshpass -p "$PASSWORD" ssh "$USER@st101$host.rtb-lab.pl" "
-        docker pull $DOCKER_REGISTRY/$image &&
+    sshpass -p "$PASSWORD" ssh "$USER@$USER$host.rtb-lab.pl" "
+        docker pull $tag &&
         docker rm -f $container &&
         docker run -d --net=host --name $container $image"
   done
