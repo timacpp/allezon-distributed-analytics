@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source .env
-set -eox pipefail
+set -eo pipefail
 
 sudo apt -y install ansible sshpass zip
 curl -s "https://get.sdkman.io" | bash

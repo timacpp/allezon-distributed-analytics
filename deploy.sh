@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source .env
-set -eox pipefail
+set -eo pipefail
 
 function deploy {
   local container="allezon-$1"
