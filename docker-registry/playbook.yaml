@@ -9,15 +9,6 @@
             name: docker.io
             state: latest
 
-      - name: Add current user to docker group
-        become: true
-        become_user: root
-        command: gpasswd -a $USER docker
-
-      - name: Reload docker group
-        become: true
-        command: newgrp docker
-
       - name: Create directory
         become: true
         ansible.builtin.file:
@@ -92,6 +83,7 @@
 
       - name: Start registry
         become: true
+        become_user: root
         command: docker run -d --restart=always --name registry  -v /etc/docker/certs:/certs -e REGISTRY_HTTP_ADDR=0.0.0.0:443 -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/ca.crt -e REGISTRY_HTTP_TLS_KEY=/certs/ca.key -p 443:443 registry:2
 
 - name: Sync Push task - Executed on source host "{{groups['registry'][0]}}"

@@ -7,14 +7,14 @@ function deploy {
   local container="allezon-$1"
   local image="$container:latest"
   local tag="$DOCKER_REGISTRY/$image"
-  docker build -t "$image" "$1"
-  docker tag "$image" "$tag"
-  docker push "$DOCKER_REGISTRY"/"$image"
+  sudo docker build -t "$image" "$1"
+  sudo docker tag "$image" "$tag"
+  sudo docker push "$DOCKER_REGISTRY"/"$image"
   for vm in "${@:2}"; do
     sshpass -p "$PASSWORD" ssh "st101@st101$vm.rtb-lab.pl" "
-        docker pull $tag &&
-        docker rm -f $container &&
-        docker run -d --net=host --name $container $image"
+        sudo docker pull $tag &&
+        sudo docker rm -f $container &&
+        sudo docker run -d --net=host --name $container $image"
   done
 }
 
