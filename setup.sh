@@ -7,7 +7,7 @@ sudo apt -y install ansible sshpass
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install maven
-sdk install java 20-temurin
+sdk install java 20-tem
 
 for i in $(seq -w 01 10); do
   sshpass -p "$PASSWORD" ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C "/bin/true";
