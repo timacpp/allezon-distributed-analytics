@@ -20,7 +20,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>aggregates-api.jar</finalName>
+		<finalName>aggregates-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
