@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source .env
-set -eo pipefail
+set -eox pipefail
 
 function deploy {
   local container="allezon-$1"
@@ -13,6 +13,7 @@ function deploy {
   for vm in "${@:2}"; do
     sshpass -p "$PASSWORD" ssh "st101@st101$vm.rtb-lab.pl" "
         sudo docker pull $tag &&
+        sudo docker images &&
         sudo docker rm -f $container &&
         sudo docker run -d --net=host --name $container $image"
   done
