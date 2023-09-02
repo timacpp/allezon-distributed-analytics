@@ -3,7 +3,7 @@
 source .env
 set -eo pipefail
 
-sudo apt -y install ansible sshpass zip unzip
+sudo apt -y install ansible sshpass
 curl -s "https://get.sdkman.io" | bash
 sdk install maven
 sdk install java 20-temurin
