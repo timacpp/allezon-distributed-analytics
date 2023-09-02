@@ -15,7 +15,7 @@ function deploy {
         sudo docker pull $tag &&
         sudo docker images &&
         sudo docker rm -f $container &&
-        sudo docker run -d --net=host --name $container $image"
+        sudo docker run -d --net=host --name $container $tag"
   done
 }
 
