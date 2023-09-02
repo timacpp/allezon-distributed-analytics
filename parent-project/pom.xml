@@ -23,6 +23,7 @@
 		<module>../common-core</module>
 		<module>../user-tags-api</module>
 		<module>../user-profiles-api</module>
+		<module>../aggregates-api</module>
 	</modules>
 	<dependencies>
 		<dependency>
