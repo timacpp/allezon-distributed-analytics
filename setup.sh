@@ -3,7 +3,7 @@
 source .env
 set -eo pipefail
 
-sudo apt -y install ansible sshpass
+sudo apt -y install ansible sshpass zip
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install maven
