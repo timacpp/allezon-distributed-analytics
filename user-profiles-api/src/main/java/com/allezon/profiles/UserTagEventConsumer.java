@@ -16,7 +16,7 @@ public class UserTagEventConsumer {
 	@Autowired
 	private UserTagsDao userTagsDao;
 
-	@KafkaListener(topics = KafkaConstants.USER_TAGS_TOPIC, groupId = KafkaConstants.USER_PROFILES_GROUP)
+	@KafkaListener(topics = KafkaConstants.USER_TAGS_TOPIC)
 	void consume(UserTag userTag) {
 		logger.info("Consuming user tag: {}", userTag);
 		userTagsDao.save(userTag);
