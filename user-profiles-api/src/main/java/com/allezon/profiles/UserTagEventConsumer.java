@@ -1,4 +1,4 @@
-package com.allezon.tags;
+package com.allezon.profiles;
 
 import com.allezon.core.constants.KafkaConstants;
 import com.allezon.core.dao.UserTagsDao;
@@ -16,7 +16,7 @@ public class UserTagEventConsumer {
 	@Autowired
 	private UserTagsDao userTagsDao;
 
-	@KafkaListener(topics = KafkaConstants.USER_TAGS_TOPIC, groupId = KafkaConstants.USER_TAGS_GROUP)
+	@KafkaListener(topics = KafkaConstants.USER_TAGS_TOPIC, groupId = KafkaConstants.USER_PROFILES_GROUP)
 	void consume(UserTag userTag) {
 		logger.info("Consuming user tag: {}", userTag);
 		userTagsDao.save(userTag);

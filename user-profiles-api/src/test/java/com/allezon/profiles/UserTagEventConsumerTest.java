@@ -1,4 +1,4 @@
-package com.allezon.tags;
+package com.allezon.profiles;
 
 import com.allezon.core.dao.UserTagsDao;
 import com.allezon.core.domain.UserTag;
