@@ -20,15 +20,13 @@ function deploy {
 }
 
 if [[ -n $1 && -n $2 ]]; then
-  if [[ $1 == *-api ]]; then
-    mvn --file parent-project clean install
-  fi
   deploy "$1" "$2"
-else
-  mvn --file parent-project clean install
-  deploy haproxy vm101
-  deploy aerospike vm105 vm106 vm107
-  deploy user-tags-api vm108
-  deploy user-profiles-api vm109
-  deploy aggregates-api vm110
+  exit
 fi
+
+mvn --file parent-project clean install
+deploy haproxy vm101
+deploy aerospike vm102 vm103 vm104
+deploy user-tags-api vm108
+deploy user-profiles-api vm109
+deploy aggregates-api vm110
