@@ -1,4 +1,4 @@
-package com.allezon.core.aerospike;
+package com.allezon.core.dao;
 
 import com.aerospike.client.*;
 import com.aerospike.client.Record;
@@ -6,14 +6,14 @@ import com.aerospike.client.policy.ClientPolicy;
 import com.aerospike.client.policy.CommitLevel;
 import com.aerospike.client.policy.RecordExistsAction;
 import com.aerospike.client.policy.Replica;
-import jakarta.annotation.PreDestroy;
+import com.allezon.core.dao.response.DaoResponse;
 
+import java.io.Closeable;
 import java.util.Arrays;
 
-public abstract class AerospikeRepository<T> {
+public abstract class AerospikeDao<T> implements Closeable {
 	private static final ClientPolicy DEFAULT_POLICY = new ClientPolicy();
-
-	protected static final String NAMESPACE = "allezon";
+	private static final String NAMESPACE = "allezon";
 
 	private final String set;
 	private final AerospikeClient client;
@@ -29,32 +29,33 @@ public abstract class AerospikeRepository<T> {
 		DEFAULT_POLICY.writePolicyDefault.recordExistsAction = RecordExistsAction.REPLACE;
 	}
 
-	public AerospikeRepository(String set, String[] seeds, int port) {
+	public AerospikeDao(String set, String[] seeds, int port) {
 		this.set = set;
 		this.client = new AerospikeClient(DEFAULT_POLICY,
 				Arrays.stream(seeds).map(seed -> new Host(seed, port)).toArray(Host[]::new));
 	}
 
-	public abstract T get(String key);
+	public abstract DaoResponse<T> get(String key);
+
+	public abstract void save(T value);
+
+	protected void closeClient() {
+		client.close();
+	}
 
 	protected Record getRecord(String key) {
 		return client.get(null, createKey(key));
 	}
 
-	public void operate(String key, Operation... operations) {
+	protected void operate(String key, Operation... operations) {
 		client.operate(null, createKey(key), operations);
-	}
-
-	private Key createKey(String key) {
-		return new Key(NAMESPACE, set, key);
 	}
 
 	protected Value createValue(Object value) {
 		return Value.get(value);
 	}
 
-	@PreDestroy
-	public void close() {
-		client.close();
+	private Key createKey(String key) {
+		return new Key(NAMESPACE, set, key);
 	}
 }

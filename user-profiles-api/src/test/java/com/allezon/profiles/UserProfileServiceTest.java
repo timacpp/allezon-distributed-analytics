@@ -3,6 +3,8 @@ package com.allezon.profiles;
 import com.allezon.core.domain.TimeRange;
 import com.allezon.core.domain.UserProfile;
 import com.allezon.core.domain.UserTag;
+import com.allezon.core.dao.UserTagsDao;
+import com.allezon.core.dao.response.UserTags;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,15 +23,14 @@ public class UserProfileServiceTest {
 	private static final String COOKIE = "cookie123";
 
 	@MockBean
-	private UserProfileRepository userProfileRepository;
+	private UserTagsDao userTagsDao;
 
 	@Autowired
 	private UserProfileService userProfileService;
 
 	@Test
 	void shouldGetProfileByCookie() {
-		UserProfile userProfile = new UserProfile(COOKIE, List.of(), List.of());
-		when(userProfileRepository.get(COOKIE)).thenReturn(userProfile);
+		when(userTagsDao.get(COOKIE)).thenReturn(UserTags.EMPTY);
 		assertThat(userProfileService.getByCookie(COOKIE, TimeRange.ANY, 200))
 				.extracting("cookie")
 				.isEqualTo(COOKIE);
@@ -37,9 +38,8 @@ public class UserProfileServiceTest {
 
 	@Test
 	void shouldFilterTagsByTime() {
-		List<UserTag> userTags = List.of(buildUserTag(Instant.now()), buildUserTag(Instant.now().plusSeconds(60)));
-		UserProfile userProfile = new UserProfile(COOKIE, userTags, userTags);
-		when(userProfileRepository.get(anyString())).thenReturn(userProfile);
+		List<UserTag> tags = List.of(buildUserTag(Instant.now()), buildUserTag(Instant.now().plusSeconds(60)));
+		when(userTagsDao.get(anyString())).thenReturn(new UserTags(tags, tags));
 
 		TimeRange timeRange = new TimeRange(Instant.now().minusSeconds(60), Instant.now());
 		UserProfile actual = userProfileService.getByCookie(COOKIE, timeRange, 2);
@@ -50,9 +50,8 @@ public class UserProfileServiceTest {
 
 	@Test
 	void shouldLimitTags() {
-		List<UserTag> userTags = List.of(buildUserTag(Instant.now()), buildUserTag(Instant.now()));
-		UserProfile userProfile = new UserProfile(COOKIE, userTags, userTags);
-		when(userProfileRepository.get(anyString())).thenReturn(userProfile);
+		List<UserTag> tags = List.of(buildUserTag(Instant.now()), buildUserTag(Instant.now()));
+		when(userTagsDao.get(anyString())).thenReturn(new UserTags(tags, tags));
 
 		UserProfile actual = userProfileService.getByCookie(COOKIE, TimeRange.ANY, 1);
 

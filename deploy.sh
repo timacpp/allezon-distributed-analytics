@@ -26,8 +26,8 @@ if [[ -n $1 && -n $2 ]]; then
   deploy "$1" "$2"
 else
   mvn --file parent-project clean install
-  deploy haproxy vm102
-  deploy aerospike vm103 vm104
+  deploy haproxy vm101
+  deploy aerospike vm105 vm106 vm107
   deploy user-tags-api vm108
   deploy user-profiles-api vm109
   deploy aggregates-api vm110

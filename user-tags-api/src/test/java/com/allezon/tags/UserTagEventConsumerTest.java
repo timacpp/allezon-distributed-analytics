@@ -1,5 +1,6 @@
-package com.allezon.profiles;
+package com.allezon.tags;
 
+import com.allezon.core.dao.UserTagsDao;
 import com.allezon.core.domain.UserTag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,9 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class UserTagEventConsumerTest {
-	private static final String COOKIE = "cookie123";
 
 	@MockBean
-	private UserProfileRepository userProfileRepository;
-
-	@MockBean
-	private UserProfileService userProfileService;
+	private UserTagsDao userTagsDao;
 
 	@Autowired
 	private UserTagEventConsumer userTagEventConsumer;
@@ -27,10 +24,10 @@ public class UserTagEventConsumerTest {
 	void shouldUpdateUserProfileAfterConsumingEvent() {
 		UserTag userTag = buildUserTag();
 		userTagEventConsumer.consume(userTag);
-		verify(userProfileService).updateByCookie(COOKIE, userTag);
+		verify(userTagsDao).save(userTag);
 	}
 
 	private UserTag buildUserTag() {
-		return new UserTag(Instant.now().toString(), COOKIE, "PL", UserTag.Device.PC, UserTag.Action.VIEW, "origin", null);
+		return new UserTag(Instant.now().toString(),"cookie123", "PL", UserTag.Device.PC, UserTag.Action.VIEW, "origin", null);
 	}
 }
