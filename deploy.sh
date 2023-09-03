@@ -26,7 +26,7 @@ if [[ -n $1 && -n $2 ]]; then
   exit
 fi
 
-mvn --file parent-project clean install
+mvn --file parent-project clean install -DskipTests
 deploy haproxy vm101
 deploy aerospike vm102 vm103 vm104
 deploy user-tags-api vm108
