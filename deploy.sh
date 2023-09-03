@@ -22,7 +22,7 @@ function deploy {
 }
 
 if [[ -n $1 && -n $2 ]]; then
-  deploy "$1" "$2"
+  deploy "$1" "${@:2}"
   exit
 fi
 
