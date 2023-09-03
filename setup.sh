@@ -22,6 +22,7 @@ if [[ -z $(which java) ]]; then
   source "$HOME/.sdkman/bin/sdkman-init.sh"
   sdk install maven
   sdk install java 20-tem
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
 setup docker-registry
