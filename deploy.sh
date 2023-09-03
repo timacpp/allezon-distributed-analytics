@@ -3,6 +3,8 @@
 source .env
 set -eo pipefail
 
+DOCKER_REGISTRY=st101vm101.rtb-lab.pl
+
 function deploy {
   local container="allezon-$1"
   local image="$container:latest"
