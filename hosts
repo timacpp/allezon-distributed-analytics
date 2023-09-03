@@ -1,0 +1,8 @@
+[registry]
+st101vm101.rtb-lab.pl
+
+[docker]
+st101vm1[01:10].rtb-lab.pl
+
+[kafka]
+st101vm1[05:07].rtb-lab.pl

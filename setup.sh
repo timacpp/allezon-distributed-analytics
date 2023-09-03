@@ -5,7 +5,7 @@ set -eo pipefail
 
 function setup {
   cd "$1"
-  ansible-playbook -i hosts --extra-vars \
+  ansible-playbook -i ../hosts --extra-vars \
     "ansible_user=st101 ansible_password=$PASSWORD ansible_ssh_extra_args='-o StrictHostKeyChecking=no'" playbook.yaml
   cd ..
 }
