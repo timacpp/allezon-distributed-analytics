@@ -16,6 +16,7 @@ if [[ -n $1 ]]; then
 fi
 
 if [[ -z $(which java) ]]; then
+  sudo add-apt-repository ppa:ansible/ansible
   sudo apt -y install ansible sshpass zip
   curl -s "https://get.sdkman.io" | bash
   source "$HOME/.sdkman/bin/sdkman-init.sh"
