@@ -15,13 +15,14 @@ function deploy {
   for vm in "${@:2}"; do
     sshpass -p "$PASSWORD" ssh "st101@st101$vm.rtb-lab.pl" "
         sudo docker pull $tag &&
-        sudo docker images &&
         sudo docker rm -f $container &&
         sudo docker run -d --net=host --name $container $tag"
   done
 }
 
 if [[ -n $1 && -n $2 ]]; then
+  mvn --file common-core clean install -DskipTests
+  mvn --file "$1" clean install -DskipTests
   deploy "$1" "${@:2}"
   exit
 fi
