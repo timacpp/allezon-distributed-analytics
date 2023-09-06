@@ -29,7 +29,6 @@ fi
 
 mvn --file parent-project clean install -DskipTests
 deploy haproxy vm101
-deploy aerospike vm102 vm103 vm104
 deploy user-tags-api vm108
 deploy user-profiles-api vm109
 deploy aggregates-api vm110

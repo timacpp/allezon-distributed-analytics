@@ -29,3 +29,4 @@ fi
 
 setup docker-registry
 setup kafka
+setup aerospike
