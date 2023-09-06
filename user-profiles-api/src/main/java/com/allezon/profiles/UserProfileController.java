@@ -26,7 +26,7 @@ public class UserProfileController {
 		UserProfile userProfile = userProfileService.getByCookie(cookie, TimeRange.parse(timeRange), limit);
 
 		if (!userProfile.equals(expectedUserProfile)) {
-			logger.error("User profile differs: actual= " + userProfile + ", expected=" + expectedUserProfile);
+			logger.error("User profile differs: actual={}, expected={}", userProfile, expectedUserProfile);
 		}
 
 		return ResponseEntity.ok(userProfile);
