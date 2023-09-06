@@ -29,7 +29,7 @@ public abstract class AerospikeDao<T> implements Closeable {
 		DEFAULT_POLICY.writePolicyDefault.totalTimeout = 15000;
 		DEFAULT_POLICY.writePolicyDefault.maxRetries = 1;
 		DEFAULT_POLICY.writePolicyDefault.commitLevel = CommitLevel.COMMIT_MASTER;
-		DEFAULT_POLICY.writePolicyDefault.recordExistsAction = RecordExistsAction.REPLACE;
+		DEFAULT_POLICY.writePolicyDefault.recordExistsAction = RecordExistsAction.UPDATE;
 	}
 
 	public AerospikeDao(String set, String[] seeds, int port) {
