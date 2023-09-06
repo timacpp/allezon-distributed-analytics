@@ -23,6 +23,7 @@ public class UserProfileController {
 			@RequestParam(name = "time_range") String timeRange,
 			@RequestParam(name = "limit", required = false, defaultValue = "200") int limit,
 			@RequestBody(required = false) UserProfile expectedUserProfile) {
+        logger.debug("Getting profile for cookie={} with timeRange={}, limit={}", cookie, timeRange, limit);
 		UserProfile userProfile = userProfileService.getByCookie(cookie, TimeRange.parse(timeRange), limit);
 
 		if (!userProfile.equals(expectedUserProfile)) {

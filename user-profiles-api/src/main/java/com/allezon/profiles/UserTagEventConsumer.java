@@ -12,11 +12,11 @@ public class UserTagEventConsumer {
 	private static final Logger logger = LoggerFactory.getLogger(UserTagEventConsumer.class);
 
 	@Autowired
-	private UserProfileDao userProfileDao;
+	private UserProfileService userProfileService;
 
 	@KafkaListener(topics = "user-tags")
 	void consume(UserTag userTag) {
 		logger.debug("Consuming user tag={}", userTag);
-		userProfileDao.appendTag(userTag.cookie(), userTag);
+		userProfileService.appendTag(userTag.cookie(), userTag);
 	}
 }

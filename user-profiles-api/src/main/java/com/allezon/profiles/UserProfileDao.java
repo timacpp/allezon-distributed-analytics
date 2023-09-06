@@ -28,7 +28,6 @@ public class UserProfileDao extends AerospikeDao<UserProfile> {
 
     @Override
     public UserProfile get(String cookie) {
-        logger.debug("Getting profile for cookie={}", cookie);
         Record record = getRecord(cookie);
         return new UserProfile(cookie, (List<UserTag>) record.getList(VIEWS_BIN), (List<UserTag>) record.getList(BUYS_BIN));
     }
