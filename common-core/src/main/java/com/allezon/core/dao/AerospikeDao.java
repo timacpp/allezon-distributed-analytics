@@ -1,12 +1,15 @@
 package com.allezon.core.dao;
 
-import com.aerospike.client.*;
+import com.aerospike.client.AerospikeClient;
+import com.aerospike.client.Host;
+import com.aerospike.client.Key;
+import com.aerospike.client.Operation;
 import com.aerospike.client.Record;
+import com.aerospike.client.Value;
 import com.aerospike.client.policy.ClientPolicy;
 import com.aerospike.client.policy.CommitLevel;
 import com.aerospike.client.policy.RecordExistsAction;
 import com.aerospike.client.policy.Replica;
-import com.allezon.core.dao.response.DaoResponse;
 
 import java.io.Closeable;
 import java.util.Arrays;
@@ -35,11 +38,10 @@ public abstract class AerospikeDao<T> implements Closeable {
 				Arrays.stream(seeds).map(seed -> new Host(seed, port)).toArray(Host[]::new));
 	}
 
-	public abstract DaoResponse<T> get(String key);
+	public abstract T get(String key);
 
-	public abstract void save(T value);
-
-	protected void closeClient() {
+	@Override
+	public void close() {
 		client.close();
 	}
 

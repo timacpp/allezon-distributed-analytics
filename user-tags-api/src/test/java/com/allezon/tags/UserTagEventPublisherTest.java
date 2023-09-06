@@ -1,7 +1,7 @@
 package com.allezon.tags;
 
 import com.allezon.core.constants.KafkaConstants;
-import com.allezon.core.dao.UserTagsDao;
+import com.allezon.core.dao.UserProfileDao;
 import com.allezon.core.domain.UserTag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class UserTagEventPublisherTest {
 	private KafkaTemplate<String, UserTag> kafkaTemplate;
 
 	@MockBean
-	private UserTagsDao userTagsDao;
+	private UserProfileDao userProfileDao;
 
 	@Autowired
 	private UserTagEventPublisher userTagEventPublisher;

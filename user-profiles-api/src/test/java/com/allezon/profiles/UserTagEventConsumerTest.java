@@ -1,6 +1,6 @@
 package com.allezon.profiles;
 
-import com.allezon.core.dao.UserTagsDao;
+import com.allezon.core.dao.UserProfileDao;
 import com.allezon.core.domain.UserTag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 public class UserTagEventConsumerTest {
 
 	@MockBean
-	private UserTagsDao userTagsDao;
+	private UserProfileDao userProfileDao;
 
 	@Autowired
 	private UserTagEventConsumer userTagEventConsumer;
@@ -24,7 +24,7 @@ public class UserTagEventConsumerTest {
 	void shouldUpdateUserProfileAfterConsumingEvent() {
 		UserTag userTag = buildUserTag();
 		userTagEventConsumer.consume(userTag);
-		verify(userTagsDao).save(userTag);
+		verify(userProfileDao).appendTag(userTag.cookie(), userTag);
 	}
 
 	private UserTag buildUserTag() {

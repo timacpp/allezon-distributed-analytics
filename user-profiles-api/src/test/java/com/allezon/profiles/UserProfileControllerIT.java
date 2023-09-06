@@ -1,6 +1,6 @@
 package com.allezon.profiles;
 
-import com.allezon.core.dao.UserTagsDao;
+import com.allezon.core.dao.UserProfileDao;
 import com.allezon.core.domain.TimeRange;
 import com.allezon.core.domain.UserProfile;
 import com.allezon.core.domain.UserTag;
@@ -34,7 +34,7 @@ public class UserProfileControllerIT {
 	private UserProfileService userProfileService;
 
 	@MockBean
-	private UserTagsDao userTagsDao;
+	private UserProfileDao userProfileDao;
 
 	@Test
 	void shouldGetUserProfile() throws Exception {
