@@ -1,8 +1,9 @@
-package com.allezon.core.dao;
+package com.allezon.profiles;
 
 import com.aerospike.client.Record;
 import com.aerospike.client.cdt.ListOperation;
 import com.aerospike.client.cdt.ListReturnType;
+import com.allezon.core.dao.AerospikeDao;
 import com.allezon.core.domain.UserProfile;
 import com.allezon.core.domain.UserTag;
 

@@ -1,6 +1,5 @@
 package com.allezon.profiles;
 
-import com.allezon.core.dao.UserProfileDao;
 import com.allezon.core.domain.TimeRange;
 import com.allezon.core.domain.UserProfile;
 import com.allezon.core.domain.UserTag;

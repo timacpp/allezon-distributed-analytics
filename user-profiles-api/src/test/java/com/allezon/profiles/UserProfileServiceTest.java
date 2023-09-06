@@ -3,7 +3,7 @@ package com.allezon.profiles;
 import com.allezon.core.domain.TimeRange;
 import com.allezon.core.domain.UserProfile;
 import com.allezon.core.domain.UserTag;
-import com.allezon.core.dao.UserProfileDao;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

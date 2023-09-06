@@ -1,7 +1,5 @@
 package com.allezon.profiles;
 
-import com.allezon.core.constants.KafkaConstants;
-import com.allezon.core.dao.UserProfileDao;
 import com.allezon.core.domain.UserTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +14,7 @@ public class UserTagEventConsumer {
 	@Autowired
 	private UserProfileDao userProfileDao;
 
-	@KafkaListener(topics = KafkaConstants.USER_TAGS_TOPIC)
+	@KafkaListener(topics = "user-tags")
 	void consume(UserTag userTag) {
 		logger.info("Consuming user tag: {}", userTag);
 		userProfileDao.appendTag(userTag.cookie(), userTag);
