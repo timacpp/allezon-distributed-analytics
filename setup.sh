@@ -11,7 +11,9 @@ function setup {
 }
 
 if [[ -n $1 ]]; then
-  setup "$1"
+  for project in "$@"; do
+    setup $project
+  done
   exit
 fi
 
