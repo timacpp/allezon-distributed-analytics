@@ -15,7 +15,7 @@ function deploy {
   for vm in "${@:2}"; do
     sshpass -p "$PASSWORD" ssh "st101@st101$vm.rtb-lab.pl" "
         sudo docker pull $tag &&
-        sudo docker rm -f $container &&
+        sudo docker rm -f $container 2>&1 /dev/null &&
         sudo docker run -d --net=host --name $container $tag"
   done
 }
