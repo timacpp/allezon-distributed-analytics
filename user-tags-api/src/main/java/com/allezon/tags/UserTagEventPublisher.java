@@ -15,7 +15,7 @@ public class UserTagEventPublisher {
 	private KafkaTemplate<String, UserTag> kafkaTemplate;
 
 	public void publish(UserTag userTag) {
-		logger.debug("Publishing user tag={}", userTag);
+		logger.info("Publishing user tag={}", userTag);
 		kafkaTemplate.send("user-tags", userTag);
 	}
 }

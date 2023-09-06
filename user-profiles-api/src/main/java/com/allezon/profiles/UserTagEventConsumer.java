@@ -16,7 +16,7 @@ public class UserTagEventConsumer {
 
 	@KafkaListener(topics = "user-tags")
 	void consume(UserTag userTag) {
-		logger.debug("Consuming user tag={}", userTag);
+		logger.info("Consuming user tag={}", userTag);
 		userProfileService.appendTag(userTag.cookie(), userTag);
 	}
 }
