@@ -1,6 +1,7 @@
 package com.allezon.core.domain;
 
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 
 public record UserProfile(String cookie, List<UserTag> views, List<UserTag> buys) {
@@ -15,6 +16,7 @@ public record UserProfile(String cookie, List<UserTag> views, List<UserTag> buys
 		return tags.stream()
 				.filter(tag -> timeRange.includes(Instant.parse(tag.time())))
 				.limit(limit)
+				.sorted(Comparator.comparing(UserTag::time).reversed())
 				.toList();
 	}
 }
