@@ -23,11 +23,11 @@ public class UserProfileController {
 			@RequestParam(name = "time_range") String timeRange,
 			@RequestParam(name = "limit", required = false, defaultValue = "200") int limit,
 			@RequestBody(required = false) UserProfile expectedUserProfile) {
-        logger.info("Getting profile for cookie={} with timeRange={}, limit={}", cookie, timeRange, limit);
 		UserProfile userProfile = userProfileService.getByCookie(cookie, TimeRange.parse(timeRange), limit);
 
 		if (!userProfile.equals(expectedUserProfile)) {
-			logger.error("User profile differs: actual={}, expected={}", userProfile, expectedUserProfile);
+			logger.error("User profile differs for timeRange={}, limit={}, actual={}, expected={}",
+					timeRange, limit, userProfile, expectedUserProfile);
 		}
 
 		return ResponseEntity.ok(userProfile);
