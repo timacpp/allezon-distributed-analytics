@@ -49,8 +49,8 @@ public abstract class AerospikeDao<T> implements Closeable {
 		return client.get(null, createKey(key));
 	}
 
-	protected Record operate(String key, Operation... operations) {
-		return client.operate(null, createKey(key), operations);
+	protected void operate(String key, Operation... operations) {
+		client.operate(null, createKey(key), operations);
 	}
 
 	protected Value createValue(Object value) {
