@@ -16,6 +16,6 @@ public record TimeRange(Instant start, Instant end) {
 	}
 
 	public boolean includes(Instant instant) {
-		return start.isBefore(instant) && end.isAfter(instant);
+		return start.equals(instant) || start.isBefore(instant) && end.isAfter(instant);
 	}
 }
