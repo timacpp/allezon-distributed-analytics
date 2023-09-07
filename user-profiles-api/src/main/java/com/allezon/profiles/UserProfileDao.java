@@ -7,7 +7,6 @@ import com.allezon.core.dao.AerospikeDao;
 import com.allezon.profiles.domain.UserProfile;
 import com.allezon.core.domain.UserTag;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,8 +18,8 @@ public class UserProfileDao extends AerospikeDao<UserProfile> {
     private static final String BUYS_BIN = "buys";
     private static final int MAX_TAGS_PER_ACTION = 200;
 
-	public UserProfileDao(@Value("${aerospike.seeds}") String[] seeds, @Value("${aerospike.port}") int port) {
-		super(SET, seeds, port);
+	public UserProfileDao() {
+		super(SET);
 	}
 
     @Override
