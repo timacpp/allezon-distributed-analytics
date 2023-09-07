@@ -10,6 +10,11 @@ function setup {
   cd ..
 }
 
+for i in $(seq -w 01 10); do
+  ssh-keygen -f /home/st101/.ssh/known_hosts -R st101vm1"$i".rtb-lab.pl
+  sshpass -p <password> ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C /bin/true;
+done
+
 if [[ -n $1 ]]; then
   for project in "$@"; do
     setup $project
