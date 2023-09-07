@@ -11,16 +11,9 @@ function setup {
 }
 
 for i in $(seq -w 01 10); do
-  ssh-keygen -f /home/st101/.ssh/known_hosts -R st101vm1"$i".rtb-lab.pl
-  sshpass -p <password> ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C /bin/true;
+  ssh-keygen -f "$HOME".ssh/known_hosts -R st101vm1"$i".rtb-lab.pl
+  sshpass -p "$PASSWORD" ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C /bin/true;
 done
-
-if [[ -n $1 ]]; then
-  for project in "$@"; do
-    setup $project
-  done
-  exit
-fi
 
 if [[ -z $(which java) ]]; then
   sudo add-apt-repository ppa:ansible/ansible
@@ -30,6 +23,13 @@ if [[ -z $(which java) ]]; then
   sdk install maven
   sdk install java 20-tem
   source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
+
+if [[ -n $1 ]]; then
+  for project in "$@"; do
+    setup $project
+  done
+  exit
 fi
 
 setup docker-registry
