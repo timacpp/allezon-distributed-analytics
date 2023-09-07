@@ -1,7 +1,7 @@
 package com.allezon.profiles;
 
 import com.allezon.core.domain.TimeRange;
-import com.allezon.core.domain.UserProfile;
+import com.allezon.profiles.domain.UserProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

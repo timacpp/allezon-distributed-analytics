@@ -1,8 +1,11 @@
-package com.allezon.core.domain;
+package com.allezon.profiles.domain;
 
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
+
+import com.allezon.core.domain.TimeRange;
+import com.allezon.core.domain.UserTag;
 
 public record UserProfile(String cookie, List<UserTag> views, List<UserTag> buys) {
 	public UserProfile withFilteredTags(TimeRange timeRange, int limit) {

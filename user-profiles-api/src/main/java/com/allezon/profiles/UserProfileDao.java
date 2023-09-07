@@ -4,7 +4,7 @@ import com.aerospike.client.Record;
 import com.aerospike.client.cdt.ListOperation;
 import com.aerospike.client.cdt.ListReturnType;
 import com.allezon.core.dao.AerospikeDao;
-import com.allezon.core.domain.UserProfile;
+import com.allezon.profiles.domain.UserProfile;
 import com.allezon.core.domain.UserTag;
 
 import org.springframework.beans.factory.annotation.Value;
