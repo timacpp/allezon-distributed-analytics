@@ -11,8 +11,8 @@ function setup {
 }
 
 for i in $(seq -w 01 10); do
-  ssh-keygen -f "$HOME".ssh/known_hosts -R st101vm1"$i".rtb-lab.pl
-  sshpass -p "$PASSWORD" ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C /bin/true;
+  ssh-keygen -f "$HOME".ssh/known_hosts -R st101vm1"$i".rtb-lab.pl >/dev/null 2>&1
+  sshpass -p "$PASSWORD" ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C /bin/true >/dev/null 2>&1
 done
 
 if [[ -z $(which java) ]]; then
