@@ -18,6 +18,11 @@
 			<artifactId>core</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+			<version>2.7.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>aggregates-api</finalName>
@@ -27,7 +32,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.6.6</version>
 				<configuration>
-					<mainClass>com.allezon.aggregates.AggregatesApplication</mainClass>
+					<mainClass>com.allezon.aggregates.AggregateApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>

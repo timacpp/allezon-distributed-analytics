@@ -1,7 +1,8 @@
 package com.allezon.aggregates;
 
-import com.allezon.aggregates.domain.Aggregates;
-import com.allezon.aggregates.domain.AggregationType;
+import com.allezon.aggregates.domain.AggregatesWindow;
+import com.allezon.aggregates.domain.QueryFilter;
+import com.allezon.aggregates.domain.Operator;
 import com.allezon.core.domain.TimeRange;
 import com.allezon.core.domain.UserTag;
 
@@ -15,22 +16,23 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/aggregates")
-public class AggregatesController {
-	private static final Logger logger = LoggerFactory.getLogger(AggregatesController.class);
+public class AggregateController {
+	private static final Logger logger = LoggerFactory.getLogger(AggregateController.class);
 
 	@Autowired
-	private AggregatesService aggregatesService;
+	private AggregateService aggregateService;
 
 	@PostMapping("/aggregates")
-	public ResponseEntity<Aggregates> getAggregates(
+	public ResponseEntity<AggregatesWindow> getAggregates(
 			@RequestParam("time_range") String timeRange,
 			@RequestParam("action") UserTag.Action action,
-			@RequestParam("aggregates") List<AggregationType> aggregateTypes,
+			@RequestParam("aggregates") List<Operator> operators,
 			@RequestParam(value = "origin", required = false) String origin,
 			@RequestParam(value = "brand_id", required = false) String brandId,
 			@RequestParam(value = "category_id", required = false) String categoryId,
-			@RequestBody(required = false) Aggregates expectedAggregates) {
-		Aggregates aggregates = aggregatesService.getAggregates(TimeRange.parse(timeRange), action, aggregateTypes, origin, brandId, categoryId);
+			@RequestBody(required = false) AggregatesWindow expectedAggregates) {
+		QueryFilter filter = new QueryFilter(origin, brandId, categoryId);
+		AggregatesWindow aggregates = aggregateService.query(TimeRange.parse(timeRange), action, operators, filter);
 
 		if (!aggregates.equals(expectedAggregates)) {
             logger.error("Aggregates mismatch for timeRange={}, actual={}, expected={}",
