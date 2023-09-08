@@ -14,13 +14,14 @@ import com.aerospike.client.policy.Replica;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
-public abstract class AerospikeDao<T> implements Closeable {
+public abstract class AerospikeDao implements Closeable {
     private static final ClientPolicy DEFAULT_POLICY = new ClientPolicy();
     private static final String NAMESPACE = "allezon";
 
@@ -43,8 +44,6 @@ public abstract class AerospikeDao<T> implements Closeable {
         this.client = createClient();
     }
 
-    public abstract T get(String key);
-
     @Override
     public void close() {
         client.close();
@@ -54,8 +53,16 @@ public abstract class AerospikeDao<T> implements Closeable {
         return client.get(null, createKey(key));
     }
 
+    protected Record[] getRecords(List<String> keys) {
+        return client.get(null, createKeys(keys));
+    }
+
     protected void operate(String key, Operation... operations) {
         client.operate(null, createKey(key), operations);
+    }
+
+    protected void operate(List<String> keys, Operation... operations) {
+        client.operate(null, null, createKeys(keys), operations);
     }
 
     protected Value createValue(Object value) {
@@ -64,6 +71,10 @@ public abstract class AerospikeDao<T> implements Closeable {
 
     private Key createKey(String key) {
         return new Key(NAMESPACE, set, key);
+    }
+
+    private Key[] createKeys(List<String> keys) {
+        return keys.stream().map(this::createKey).toArray(Key[]::new);
     }
 
     private AerospikeClient createClient() {

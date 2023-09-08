@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserProfileDao extends AerospikeDao<UserProfile> {
+public class UserProfileDao extends AerospikeDao {
     private static final String SET = "profiles";
     private static final String VIEWS_BIN = "views";
     private static final String BUYS_BIN = "buys";
@@ -22,7 +22,6 @@ public class UserProfileDao extends AerospikeDao<UserProfile> {
 		super(SET);
 	}
 
-    @Override
     public UserProfile get(String cookie) {
         Record record = getRecord(cookie);
         return new UserProfile(cookie, (List<UserTag>) record.getList(VIEWS_BIN), (List<UserTag>) record.getList(BUYS_BIN));
