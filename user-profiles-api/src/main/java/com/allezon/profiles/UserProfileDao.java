@@ -27,9 +27,9 @@ public class UserProfileDao extends AerospikeDao {
         return new UserProfile(cookie, (List<UserTag>) record.getList(VIEWS_BIN), (List<UserTag>) record.getList(BUYS_BIN));
     }
 
-    public void appendTag(String cookie, UserTag userTag) {
+    public void appendTag(UserTag userTag) {
         String bin = userTag.action() == UserTag.Action.BUY ? BUYS_BIN : VIEWS_BIN;
-        operate(cookie,
+        operate(userTag.cookie(),
                 ListOperation.append(bin, createValue(userTag)),
                 ListOperation.removeByIndexRange(bin, -MAX_TAGS_PER_ACTION, MAX_TAGS_PER_ACTION, ListReturnType.INVERTED));
     }

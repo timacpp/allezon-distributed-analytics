@@ -23,7 +23,7 @@ public class UserTagEventConsumerTest {
 	void shouldUpdateUserProfileAfterConsumingEvent() {
 		UserTag userTag = buildUserTag();
 		userTagEventConsumer.consume(userTag);
-		verify(userProfileDao).appendTag(userTag.cookie(), userTag);
+		verify(userProfileDao).appendTag(userTag);
 	}
 
 	private UserTag buildUserTag() {
