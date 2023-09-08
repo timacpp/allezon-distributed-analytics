@@ -1,6 +1,7 @@
 package com.allezon.profiles;
 
 import com.aerospike.client.Record;
+import com.aerospike.client.Value;
 import com.aerospike.client.cdt.ListOperation;
 import com.aerospike.client.cdt.ListReturnType;
 import com.allezon.core.dao.AerospikeDao;
@@ -30,7 +31,7 @@ public class UserProfileDao extends AerospikeDao {
     public void appendTag(UserTag userTag) {
         String bin = userTag.action() == UserTag.Action.BUY ? BUYS_BIN : VIEWS_BIN;
         operate(userTag.cookie(),
-                ListOperation.append(bin, createValue(userTag)),
+                ListOperation.append(bin, Value.get(userTag)),
                 ListOperation.removeByIndexRange(bin, -MAX_TAGS_PER_ACTION, MAX_TAGS_PER_ACTION, ListReturnType.INVERTED));
     }
 }
