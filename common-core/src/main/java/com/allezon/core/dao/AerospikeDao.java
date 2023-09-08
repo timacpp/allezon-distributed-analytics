@@ -5,7 +5,6 @@ import com.aerospike.client.Host;
 import com.aerospike.client.Key;
 import com.aerospike.client.Operation;
 import com.aerospike.client.Record;
-import com.aerospike.client.Value;
 import com.aerospike.client.policy.ClientPolicy;
 import com.aerospike.client.policy.CommitLevel;
 import com.aerospike.client.policy.RecordExistsAction;
@@ -53,20 +52,16 @@ public abstract class AerospikeDao implements Closeable {
         return client.get(null, createKey(key));
     }
 
-    protected Record[] getRecords(List<String> keys) {
-        return client.get(null, createKeys(keys));
+    protected List<Record> getRecords(List<String> keys) {
+        return Arrays.asList(client.get(null, createKeys(keys)));
     }
 
     protected void operate(String key, Operation... operations) {
         client.operate(null, createKey(key), operations);
     }
 
-    protected void operate(List<String> keys, Operation... operations) {
-        client.operate(null, null, createKeys(keys), operations);
-    }
-
-    protected Value createValue(Object value) {
-        return Value.get(value);
+    protected void operate(List<String> key, List<Operation> operations) {
+        client.operate(null, null, createKeys(key), operations.toArray(Operation[]::new));
     }
 
     private Key createKey(String key) {
