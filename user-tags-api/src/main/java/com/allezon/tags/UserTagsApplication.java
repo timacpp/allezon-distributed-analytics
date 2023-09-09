@@ -9,9 +9,9 @@ import org.springframework.kafka.config.TopicBuilder;
 
 @EnableKafka
 @SpringBootApplication
-public class UserTagApplication {
+public class UserTagsApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(UserTagApplication.class, args);
+		SpringApplication.run(UserTagsApplication.class, args);
 	}
 
 	@Bean

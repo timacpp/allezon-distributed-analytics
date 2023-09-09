@@ -1,16 +1,17 @@
 package com.allezon.tags;
 
-import com.allezon.core.domain.UserTag;
+import com.allezon.core.domain.tag.UserTag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user_tags")
-public class UserTagController {
+public class UserTagsController {
 
 	@Autowired
-	private UserTagEventPublisher userTagEventsPublisher;
+	private UserTagsEventPublisher userTagEventsPublisher;
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)

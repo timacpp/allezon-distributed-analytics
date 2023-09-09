@@ -1,6 +1,7 @@
 package com.allezon.tags;
 
-import com.allezon.core.domain.UserTag;
+import com.allezon.core.domain.tag.UserTag;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,18 +13,18 @@ import java.time.Instant;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class UserTagEventPublisherTest {
+public class UserTagsEventPublisherTest {
 
 	@MockBean
 	private KafkaTemplate<String, UserTag> kafkaTemplate;
 
 	@Autowired
-	private UserTagEventPublisher userTagEventPublisher;
+	private UserTagsEventPublisher userTagsEventPublisher;
 
 	@Test
 	void shouldSendEventsToUserTagsTopic() {
 		UserTag userTag = buildUserTag();
-		userTagEventPublisher.publish(userTag);
+		userTagsEventPublisher.publish(userTag);
 		verify(kafkaTemplate).send("user-tags", userTag);
 	}
 
