@@ -24,6 +24,7 @@
 		<module>../user-tags-api</module>
 		<module>../user-profiles-api</module>
 		<module>../aggregates-api</module>
+		<module>../user-profiles-loader</module>
 	</modules>
 	<dependencies>
 		<dependency>

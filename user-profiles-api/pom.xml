@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>user-profiles-api</artifactId>
 	<version>0.0.1</version>
-	<name>profiles</name>
+	<name>profiles-api</name>
 	<description>User profiles API</description>
 	<packaging>jar</packaging>
 	<dependencies>

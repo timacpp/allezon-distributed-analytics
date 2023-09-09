@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>user-tags-api</artifactId>
 	<version>0.0.1</version>
-	<name>tags</name>
+	<name>tags-api</name>
 	<description>User tags API</description>
 	<packaging>jar</packaging>
 	<dependencies>
