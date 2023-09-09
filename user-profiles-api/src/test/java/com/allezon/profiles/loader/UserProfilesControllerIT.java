@@ -1,8 +1,8 @@
-package com.allezon.profiles;
+package com.allezon.profiles.loader;
 
-import com.allezon.core.domain.TimeRange;
-import com.allezon.profiles.domain.UserProfile;
-import com.allezon.core.domain.UserTag;
+import com.allezon.core.domain.common.TimeRange;
+import com.allezon.core.domain.profile.UserProfile;
+import com.allezon.core.domain.tag.UserTag;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@WebMvcTest(UserProfileController.class)
-public class UserProfileControllerIT {
+@WebMvcTest(UserProfilesController.class)
+public class UserProfilesControllerIT {
 
 	private static final String COOKIE = "cookie123";
 
@@ -30,15 +30,12 @@ public class UserProfileControllerIT {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private UserProfileService userProfileService;
-
-	@MockBean
-	private UserProfileDao userProfileDao;
+	private UserProfilesService userProfilesService;
 
 	@Test
 	void shouldGetUserProfile() throws Exception {
 		UserProfile userProfile = new UserProfile(COOKIE, List.of(buildTag()), List.of(buildTag()));
-		when(userProfileService.getByCookie(eq(COOKIE), any(TimeRange.class), anyInt())).thenReturn(userProfile);
+		when(userProfilesService.getByCookie(eq(COOKIE), any(TimeRange.class), anyInt())).thenReturn(userProfile);
 		mockMvc.perform(post("/user_profiles/" + COOKIE)
 						.param("time_range", "2022-03-22T12:15:00_2025-03-22T12:30:00")
 						.contentType(MediaType.APPLICATION_JSON))
@@ -49,7 +46,7 @@ public class UserProfileControllerIT {
 	@Test
 	void shouldGetUserProfileWithSpecifiedLimit() throws Exception {
 		UserProfile emptyUserProfile = new UserProfile(COOKIE, List.of(), List.of());
-		when(userProfileService.getByCookie(eq(COOKIE), any(TimeRange.class), eq(0))).thenReturn(emptyUserProfile);
+		when(userProfilesService.getByCookie(eq(COOKIE), any(TimeRange.class), eq(0))).thenReturn(emptyUserProfile);
 		mockMvc.perform(post("/user_profiles/" + COOKIE)
 						.param("time_range", "2022-03-22T12:15:00_2025-03-22T12:30:00")
 						.param("limit", "0")

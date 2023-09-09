@@ -21,7 +21,6 @@ function deploy {
 }
 
 if [[ -n $1 && -n $2 ]]; then
-  mvn --file common-core clean install -DskipTests
   mvn --file "$1" clean install -DskipTests
   deploy "$1" "${@:2}"
   exit
@@ -31,4 +30,5 @@ mvn --file parent-project clean install -DskipTests
 deploy haproxy vm101
 deploy user-tags-api vm109 vm110
 deploy user-profiles-api vm109 vm110
-deploy aggregates-api vm109 vm110
+deploy statistics-api vm109 vm110
+deploy user-profiles-loader vm109 vm110

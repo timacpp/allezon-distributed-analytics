@@ -1,6 +1,7 @@
-package com.allezon.profiles;
+package com.allezon.profiles.loader;
 
-import com.allezon.core.domain.UserTag;
+import com.allezon.core.dao.UserProfilesDao;
+import com.allezon.core.domain.tag.UserTag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,19 +12,19 @@ import java.time.Instant;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class UserTagEventConsumerTest {
+public class UserProfilesLoaderTest {
 
 	@MockBean
-	private UserProfileDao userProfileDao;
+	private UserProfilesDao userProfilesDao;
 
 	@Autowired
-	private UserTagEventConsumer userTagEventConsumer;
+	private UserProfilesLoader userProfilesLoader;
 
 	@Test
-	void shouldUpdateUserProfileAfterConsumingEvent() {
+	void shouldAppendTagToUserProfileAfterConsumingEvent() {
 		UserTag userTag = buildUserTag();
-		userTagEventConsumer.consume(userTag);
-		verify(userProfileDao).appendTag(userTag);
+		userProfilesLoader.loadTag(userTag);
+		verify(userProfilesDao).appendTag(userTag);
 	}
 
 	private UserTag buildUserTag() {

@@ -8,10 +8,10 @@
 		<version>0.0.1</version>
 		<relativePath>../parent-project</relativePath>
 	</parent>
-	<artifactId>user-profiles-api</artifactId>
+	<artifactId>user-profiles-loader</artifactId>
 	<version>0.0.1</version>
-	<name>profiles</name>
-	<description>User profiles API</description>
+	<name>profiles-loader</name>
+	<description>User profiles loader</description>
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
@@ -21,14 +21,14 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>user-profiles-api</finalName>
+		<finalName>user-profiles-loader</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.6.6</version>
 				<configuration>
-					<mainClass>com.allezon.profiles.loader.UserProfilesApplication</mainClass>
+					<mainClass>com.allezon.profiles.loader.UserProfilesLoader</mainClass>
 				</configuration>
 				<executions>
 					<execution>

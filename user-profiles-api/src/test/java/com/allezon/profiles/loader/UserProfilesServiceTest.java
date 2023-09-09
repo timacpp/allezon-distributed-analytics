@@ -1,8 +1,9 @@
-package com.allezon.profiles;
+package com.allezon.profiles.loader;
 
-import com.allezon.core.domain.TimeRange;
-import com.allezon.profiles.domain.UserProfile;
-import com.allezon.core.domain.UserTag;
+import com.allezon.core.dao.UserProfilesDao;
+import com.allezon.core.domain.common.TimeRange;
+import com.allezon.core.domain.profile.UserProfile;
+import com.allezon.core.domain.tag.UserTag;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +18,20 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class UserProfileServiceTest {
+public class UserProfilesServiceTest {
 
 	private static final String COOKIE = "cookie123";
 
 	@MockBean
-	private UserProfileDao userProfileDao;
+	private UserProfilesDao userProfilesDao;
 
 	@Autowired
-	private UserProfileService userProfileService;
+	private UserProfilesService userProfilesService;
 
 	@Test
 	void shouldGetProfileByCookie() {
-		when(userProfileDao.get(COOKIE)).thenReturn(new UserProfile(COOKIE, List.of(), List.of()));
-		assertThat(userProfileService.getByCookie(COOKIE, TimeRange.ANY, 200))
+		when(userProfilesDao.get(COOKIE)).thenReturn(new UserProfile(COOKIE, List.of(), List.of()));
+		assertThat(userProfilesService.getByCookie(COOKIE, TimeRange.ANY, 200))
 				.extracting("cookie")
 				.isEqualTo(COOKIE);
 	}
@@ -38,10 +39,10 @@ public class UserProfileServiceTest {
 	@Test
 	void shouldFilterTagsByTime() {
 		List<UserTag> tags = List.of(buildUserTag(Instant.now()), buildUserTag(Instant.now().plusSeconds(60)));
-		when(userProfileDao.get(anyString())).thenReturn(new UserProfile(COOKIE, tags, tags));
+		when(userProfilesDao.get(anyString())).thenReturn(new UserProfile(COOKIE, tags, tags));
 
 		TimeRange timeRange = new TimeRange(Instant.now().minusSeconds(60), Instant.now());
-		UserProfile actual = userProfileService.getByCookie(COOKIE, timeRange, 2);
+		UserProfile actual = userProfilesService.getByCookie(COOKIE, timeRange, 2);
 
 		assertThat(actual.views()).hasSize(1);
 		assertThat(actual.buys()).hasSize(1);
@@ -50,9 +51,9 @@ public class UserProfileServiceTest {
 	@Test
 	void shouldLimitTags() {
 		List<UserTag> tags = List.of(buildUserTag(Instant.now()), buildUserTag(Instant.now()));
-		when(userProfileDao.get(anyString())).thenReturn(new UserProfile(COOKIE, tags, tags));
+		when(userProfilesDao.get(anyString())).thenReturn(new UserProfile(COOKIE, tags, tags));
 
-		UserProfile actual = userProfileService.getByCookie(COOKIE, TimeRange.ANY, 1);
+		UserProfile actual = userProfilesService.getByCookie(COOKIE, TimeRange.ANY, 1);
 
 		assertThat(actual.views()).hasSize(1);
 		assertThat(actual.buys()).hasSize(1);
