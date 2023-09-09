@@ -12,18 +12,18 @@ import java.time.Instant;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class UserProfilesLoaderTest {
+public class UserProfilesLoaderApplicationTest {
 
 	@MockBean
 	private UserProfilesDao userProfilesDao;
 
 	@Autowired
-	private UserProfilesLoader userProfilesLoader;
+	private UserProfilesTagEventConsumer userProfilesTagEventConsumer;
 
 	@Test
 	void shouldAppendTagToUserProfileAfterConsumingEvent() {
 		UserTag userTag = buildUserTag();
-		userProfilesLoader.loadTag(userTag);
+		userProfilesTagEventConsumer.consume(userTag);
 		verify(userProfilesDao).appendTag(userTag);
 	}
 
