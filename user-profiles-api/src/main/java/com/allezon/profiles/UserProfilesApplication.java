@@ -1,4 +1,4 @@
-package com.allezon.profiles.loader;
+package com.allezon.profiles;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

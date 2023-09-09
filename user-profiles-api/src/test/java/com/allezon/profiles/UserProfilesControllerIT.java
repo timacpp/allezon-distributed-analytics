@@ -1,4 +1,4 @@
-package com.allezon.profiles.loader;
+package com.allezon.profiles;
 
 import com.allezon.core.domain.common.TimeRange;
 import com.allezon.core.domain.profile.UserProfile;
