@@ -12,7 +12,7 @@ import java.time.Instant;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class UserProfilesLoaderApplicationTest {
+public class UserTagsEventConsumerTest {
 
 	@MockBean
 	private UserProfilesDao userProfilesDao;
