@@ -11,7 +11,7 @@ import com.allezon.core.domain.tag.UserTag;
 
 
 @Component
-public class UserProfilesTagEventConsumer {
+public class UserTagsEventConsumer {
     private static final Logger logger = LoggerFactory.getLogger(UserProfilesLoaderApplication.class);
 
     @Autowired

@@ -18,12 +18,12 @@ public class UserProfilesLoaderApplicationTest {
 	private UserProfilesDao userProfilesDao;
 
 	@Autowired
-	private UserProfilesTagEventConsumer userProfilesTagEventConsumer;
+	private UserTagsEventConsumer userTagsEventConsumer;
 
 	@Test
 	void shouldAppendTagToUserProfileAfterConsumingEvent() {
 		UserTag userTag = buildUserTag();
-		userProfilesTagEventConsumer.consume(userTag);
+		userTagsEventConsumer.consume(userTag);
 		verify(userProfilesDao).appendTag(userTag);
 	}
 
