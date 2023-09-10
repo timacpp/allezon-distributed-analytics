@@ -1,6 +1,8 @@
 package com.allezon.core.dao;
 
 import com.aerospike.client.AerospikeClient;
+import com.aerospike.client.BatchRecord;
+import com.aerospike.client.BatchWrite;
 import com.aerospike.client.Host;
 import com.aerospike.client.Key;
 import com.aerospike.client.Operation;
@@ -60,8 +62,12 @@ public abstract class AerospikeDao implements Closeable {
         client.operate(null, createKey(key), operations);
     }
 
-    protected void operate(List<String> key, List<Operation> operations) {
-        client.operate(null, null, createKeys(key), operations.toArray(Operation[]::new));
+    protected void operate(List<BatchRecord> batchRecords) {
+        client.operate(null, batchRecords);
+    }
+
+    protected BatchRecord createBatchWrite(String key, Operation... operations) {
+        return new BatchWrite(createKey(key), operations);
     }
 
     private Key createKey(String key) {

@@ -1,11 +1,11 @@
 package com.allezon.core.dao;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.springframework.data.util.StreamUtils;
 import org.springframework.stereotype.Repository;
 
+import com.aerospike.client.BatchRecord;
 import com.aerospike.client.Bin;
 import com.aerospike.client.Operation;
 import com.allezon.core.domain.aggregates.Aggregate;
@@ -27,11 +27,11 @@ public class AggregatesDao extends AerospikeDao {
     }
 
     public void batchSave(List<Aggregate> aggregates) {
-        List<String> keys = aggregates.stream().map(Aggregate::hash).toList();
-        List<Operation> operations = aggregates.stream().flatMap(aggregate -> Stream.of(
-                    Operation.add(new Bin(COUNT_BIN, aggregate.count())),
-                    Operation.add(new Bin(SUM_BIN, aggregate.sum())))
+        List<BatchRecord> batchRecords = aggregates.stream().map(aggregate ->
+                createBatchWrite(aggregate.hash(),
+                        Operation.add(new Bin(COUNT_BIN, aggregate.count())),
+                        Operation.add(new Bin(SUM_BIN, aggregate.sum())))
                 ).toList();
-        operate(keys, operations);
+        operate(batchRecords);
     }
 }
