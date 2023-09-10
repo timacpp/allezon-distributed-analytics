@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.allezon.core.dao.AggregatesDao;
-import com.allezon.core.domain.statistics.Aggregate;
+import com.allezon.core.domain.aggregates.Aggregate;
 import com.allezon.core.domain.tag.UserTag;
 
 public class AggregatesProcessor implements Processor<String, UserTag, String, Aggregate> {

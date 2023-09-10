@@ -1,4 +1,4 @@
-package com.allezon.core.domain.statistics;
+package com.allezon.core.domain.aggregates;
 
 import java.io.Serializable;
 

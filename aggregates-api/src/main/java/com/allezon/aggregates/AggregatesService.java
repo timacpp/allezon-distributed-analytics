@@ -10,7 +10,7 @@ import org.springframework.data.util.StreamUtils;
 import org.springframework.stereotype.Component;
 
 import com.allezon.core.dao.AggregatesDao;
-import com.allezon.core.domain.statistics.Aggregate;
+import com.allezon.core.domain.aggregates.Aggregate;
 import com.allezon.aggregates.domain.AggregatesWindow;
 import com.allezon.aggregates.domain.QueryFilter;
 import com.allezon.aggregates.domain.AggregationOperator;
