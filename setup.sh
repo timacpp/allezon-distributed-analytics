@@ -17,6 +17,14 @@ if [[ -n $1 ]]; then
   exit
 fi
 
+for i in $(seq -w 01 10); do
+  sshpass -p "$PASSWORD" ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C "/bin/true";
+done
+
+setup docker-registry
+setup kafka
+setup aerospike
+
 if [[ -z $(which java) ]]; then
   sudo add-apt-repository -y ppa:ansible/ansible
   sudo apt -y install ansible sshpass zip
@@ -26,11 +34,3 @@ if [[ -z $(which java) ]]; then
   sdk install java 20-tem
   source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
-
-for i in $(seq -w 01 10);
-  do sshpass -p "$PASSWORD" ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C "/bin/true";
-done
-
-setup docker-registry
-setup kafka
-setup aerospike
