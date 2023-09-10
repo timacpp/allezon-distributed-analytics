@@ -62,3 +62,7 @@
         name: aerospike
         state: restarted
       when: service_conf.changed
+
+    - name: Increase batch request queue
+      become: true
+      command: asinfo -v "set-config:context=service;batch-max-buffers-per-queue=2048"
