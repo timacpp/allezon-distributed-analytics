@@ -22,7 +22,7 @@ public class AggregatesController {
     @Autowired
     private AggregatesService aggregatesService;
 
-    @PostMapping("/aggregates")
+    @PostMapping
     public ResponseEntity<AggregatesWindow> getAggregates(
             @RequestParam("time_range") String timeRange,
             @RequestParam("action") UserTag.Action action,
