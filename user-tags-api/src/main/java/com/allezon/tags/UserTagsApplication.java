@@ -17,7 +17,7 @@ public class UserTagsApplication {
 	@Bean
 	public NewTopic newTopic() {
 		return TopicBuilder.name("user-tags")
-				.partitions(3)
+				.partitions(2)
 				.replicas(2)
 				.build();
 	}
