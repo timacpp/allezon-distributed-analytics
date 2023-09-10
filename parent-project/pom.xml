@@ -25,6 +25,7 @@
 		<module>../user-profiles-api</module>
 		<module>../aggregates-api</module>
 		<module>../user-profiles-loader</module>
+		<module>../aggregates-loader</module>
 	</modules>
 	<dependencies>
 		<dependency>
