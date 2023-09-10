@@ -62,8 +62,7 @@ public class AggregatesService {
     private List<String> createRow(Instant bucket, Aggregate aggregate, UserTag.Action action, List<AggregationOperator> operators, QueryFilter filter) {
         List<String> row = new ArrayList<>();
 
-        row.add(bucket.toString());
-        row.add(action.toString());
+        row.add(bucket.toString().replace("Z", ""));
         if (filter.origin() != null) {
             row.add(filter.origin());
         }
