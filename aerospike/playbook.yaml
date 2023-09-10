@@ -8,32 +8,10 @@
     - name: Populate service facts
       ansible.builtin.service_facts:
 
-    - name: Download Aerospike
-      become: true
-      get_url:
-        url: https://download.aerospike.com/download/server/5.7.0.16/artifact/ubuntu20
-        dest: ~/aerospike.tgz
-        force: true
-      when: ansible_facts.services['aerospike.service'] is not defined
-
-    - name: Decompress Aerospike
-      become: true
-      become_user: root
-      command: bash -c "tar xzvf ~/aerospike.tgz"
-      when: ansible_facts.services['aerospike.service'] is not defined
-
-    - name: Install Aerospike
-      become: true
-      become_user: root
-      command:
-        cmd: bash -c "./asinstall"
-        chdir: aerospike-server-community-5.7.0.16-ubuntu20.04
-      when: ansible_facts.services['aerospike.service'] is not defined
-
-    - name: Create logs directory
+    - name: Create aerospike config directory
       become: true
       file:
-        path: /var/log/aerospike
+        path: /opt/aerospike/etc
         state: directory
 
     - name: Copy config file with owner and permissions
@@ -41,28 +19,22 @@
       register: service_conf
       template:
         src: aerospike.conf.j2
-        dest: /etc/aerospike/aerospike.conf
+        dest: /opt/aerospike/etc/aerospike.conf
         owner: root
         group: root
         mode: '0644'
 
-    - name: Ensure the Aerospike daemon is enabled
+    - name: Remove previous container
       become: true
       become_user: root
-      systemd:
-        name: aerospike
-        state: started
-        enabled: yes
-        daemon_reload: yes
+      command: docker rm -f aerospike
 
-    - name: Restart daemon on config change
+    - name: Run new container
       become: true
       become_user: root
-      systemd:
-        name: aerospike
-        state: restarted
-      when: service_conf.changed
+      command: docker run -d -v /opt/aerospike/etc/:/opt/aerospike/etc/ --name aerospike -p 3000-3002:3000-3002 aerospike/aerospike-server --config-file /opt/aerospike/etc/aerospike.conf
 
     - name: Increase batch request queue
       become: true
-      command: asinfo -v "set-config:context=service;batch-max-buffers-per-queue=8192"
+      become_user: root
+      command: docker exec -ti aerospike asinfo -v "set-config:context=service;batch-max-buffers-per-queue=8192"
