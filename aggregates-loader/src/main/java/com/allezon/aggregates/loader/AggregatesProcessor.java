@@ -40,8 +40,10 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
                 iterator.forEachRemaining(entry ->
                         aggregates.add(new Aggregate(entry.key, sumStore.get(entry.key), entry.value)));
             }
-            logger.info("Batch saving {} aggregates", aggregates.size());
-            aggregatesDao.batchSave(aggregates);
+            if (!aggregates.isEmpty()) {
+                logger.info("Batch saving {} aggregates", aggregates.size());
+                aggregatesDao.batchSave(aggregates);
+            }
         });
     }
 
