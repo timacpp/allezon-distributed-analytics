@@ -19,6 +19,7 @@ public class UserTagsApplication {
 		return TopicBuilder.name("user-tags")
 				.partitions(2)
 				.replicas(2)
+				.compact()
 				.build();
 	}
 }
