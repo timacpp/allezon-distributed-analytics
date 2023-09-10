@@ -21,17 +21,20 @@ public class AggregatesDao extends AerospikeDao {
     }
 
     public List<Aggregate> batchGet(List<String> keys) {
-        return StreamUtils.zip(keys.stream(), getRecords(keys).stream(),
-                        (key, record) -> new Aggregate(key, record.getLong(SUM_BIN), record.getLong(COUNT_BIN)))
-                .toList();
+        return StreamUtils.zip(keys.stream(), getRecords(keys).stream(), (key, record) -> {
+            if (record == null) {
+                return new Aggregate(key, 0L, 0L);
+            }
+            return new Aggregate(key, record.getLong(SUM_BIN), record.getLong(COUNT_BIN));
+        }).toList();
     }
 
     public void batchSave(List<Aggregate> aggregates) {
-        List<BatchRecord> batchRecords = aggregates.stream().map(aggregate ->
-                createBatchWrite(aggregate.hash(),
+        List<BatchRecord> batchRecords = aggregates.stream()
+                .map(aggregate -> createBatchWrite(aggregate.hash(),
                         Operation.add(new Bin(COUNT_BIN, aggregate.count())),
-                        Operation.add(new Bin(SUM_BIN, aggregate.sum())))
-                ).toList();
+                        Operation.add(new Bin(SUM_BIN, aggregate.sum()))))
+                .toList();
         operate(batchRecords);
     }
 }
