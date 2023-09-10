@@ -11,12 +11,12 @@ import com.aerospike.client.Operation;
 import com.allezon.core.domain.statistics.Aggregate;
 
 @Repository
-public class AggregateDao extends AerospikeDao {
+public class AggregatesDao extends AerospikeDao {
     private static final String SET = "aggregates";
     private static final String COUNT_BIN = "count";
     private static final String SUM_BIN = "sum";
 
-    public AggregateDao() {
+    public AggregatesDao() {
         super(SET);
     }
 
