@@ -11,7 +11,7 @@
     - name: Download Aerospike
       become: true
       get_url:
-        url: https://download.aerospike.com/download/server/6.4.0.0/artifact/ubuntu20
+        url: https://download.aerospike.com/download/server/5.7.0.16/artifact/ubuntu20
         dest: ~/aerospike.tgz
         force: true
       when: ansible_facts.services['aerospike.service'] is not defined
