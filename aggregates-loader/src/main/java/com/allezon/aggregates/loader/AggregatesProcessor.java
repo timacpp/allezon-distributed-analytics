@@ -11,12 +11,16 @@ import org.apache.kafka.streams.processor.api.ProcessorContext;
 import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.KeyValueIterator;
 import org.apache.kafka.streams.state.KeyValueStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.allezon.core.dao.AggregatesDao;
 import com.allezon.core.domain.statistics.Aggregate;
 import com.allezon.core.domain.tag.UserTag;
 
 public class AggregatesProcessor implements Processor<String, UserTag, String, Aggregate> {
+    private static final Logger logger = LoggerFactory.getLogger(AggregatesProcessor.class);
+
     private final AggregatesDao aggregatesDao;
     private KeyValueStore<String, Long> countStore;
     private KeyValueStore<String, Long> sumStore;
@@ -36,6 +40,7 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
                 iterator.forEachRemaining(entry ->
                         aggregates.add(new Aggregate(entry.key, sumStore.get(entry.key), entry.value)));
             }
+            logger.info("Batch saving {} aggregates: {}", aggregates.size(), aggregates);
             aggregatesDao.batchSave(aggregates);
         });
     }
