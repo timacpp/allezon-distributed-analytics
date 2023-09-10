@@ -65,4 +65,4 @@
 
     - name: Increase batch request queue
       become: true
-      command: asinfo -v "set-config:context=service;batch-max-buffers-per-queue=2048"
+      command: asinfo -v "set-config:context=service;batch-max-buffers-per-queue=8192"
