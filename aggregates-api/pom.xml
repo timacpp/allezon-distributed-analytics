@@ -27,7 +27,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.6.6</version>
 				<configuration>
-					<mainClass>com.allezon.aggregates.AggregatesLoader</mainClass>
+					<mainClass>com.allezon.aggregates.AggregatesApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>
