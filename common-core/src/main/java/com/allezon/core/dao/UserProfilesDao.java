@@ -24,7 +24,9 @@ public class UserProfilesDao extends AerospikeDao {
 
     public UserProfile get(String cookie) {
         Record record = getRecord(cookie);
-        return new UserProfile(cookie, (List<UserTag>) record.getList(VIEWS_BIN), (List<UserTag>) record.getList(BUYS_BIN));
+        List<UserTag> views = record != null ? (List<UserTag>) record.getList(VIEWS_BIN) : List.of();
+        List<UserTag> buys = record != null ? (List<UserTag>) record.getList(BUYS_BIN) : List.of();
+        return new UserProfile(cookie, views, buys);
     }
 
     public void appendTag(UserTag userTag) {
