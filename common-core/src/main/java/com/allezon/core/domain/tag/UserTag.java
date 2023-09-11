@@ -20,6 +20,6 @@ public record UserTag(String time, String cookie, String country, Device device,
 
 	@JsonIgnore
 	public String getTimeWithoutSeconds() {
-		return time.substring(0, time.lastIndexOf(":")) + "00";
+		return time.substring(0, 1 + time.lastIndexOf(":")) + "00";
 	}
 }
