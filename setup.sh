@@ -13,16 +13,20 @@ function setupProject {
 function setupDependencies {
   sudo add-apt-repository -y ppa:ansible/ansible
   sudo apt -y install ansible sshpass zip
-  curl -s "https://get.sdkman.io" | bash
-  source "$HOME/.sdkman/bin/sdkman-init.sh"
-  sdk install maven
-  sdk install java 20-tem
 }
 
 function setupNetwork {
   for i in $(seq -w 01 10); do
     sshpass -p "$PASSWORD" ssh st101@st101vm1"$i".rtb-lab.pl -o StrictHostKeyChecking=no -C "/bin/true";
   done
+}
+
+function setupJava {
+  curl -s "https://get.sdkman.io" | bash
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
+  sdk install maven
+  sdk install java 20-tem
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
 }
 
 if [[ -n $1 ]]; then
@@ -37,4 +41,4 @@ setupNetwork
 setupProject docker-registry
 setupProject kafka
 setupProject aerospike
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+setupJava
