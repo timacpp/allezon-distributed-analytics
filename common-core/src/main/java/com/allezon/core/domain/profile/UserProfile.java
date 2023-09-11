@@ -18,8 +18,8 @@ public record UserProfile(String cookie, List<UserTag> views, List<UserTag> buys
 		}
 		return tags.stream()
 				.filter(tag -> timeRange.includes(Instant.parse(tag.time())))
-				.limit(limit)
 				.sorted(Comparator.comparing(UserTag::time).reversed())
+				.limit(limit)
 				.toList();
 	}
 }
