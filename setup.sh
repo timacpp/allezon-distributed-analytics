@@ -31,7 +31,7 @@ function setupJava {
 
 if [[ -n $1 ]]; then
   for project in "$@"; do
-    setup $project
+    setupProject $project
   done
   exit
 fi
