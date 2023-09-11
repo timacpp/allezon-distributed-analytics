@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.aerospike.client.BatchRecord;
 import com.aerospike.client.Bin;
 import com.aerospike.client.Operation;
-import com.allezon.core.domain.aggregates.Aggregate;
+import com.allezon.core.domain.aggregate.Aggregate;
 
 @Repository
 public class AggregatesDao extends AerospikeDao {
