@@ -35,7 +35,7 @@ public abstract class AerospikeDao implements Closeable {
         DEFAULT_POLICY.readPolicyDefault.totalTimeout = 1000;
         DEFAULT_POLICY.writePolicyDefault.socketTimeout = 15000;
         DEFAULT_POLICY.writePolicyDefault.totalTimeout = 15000;
-        DEFAULT_POLICY.writePolicyDefault.maxRetries = 1;
+        DEFAULT_POLICY.writePolicyDefault.maxRetries = 3;
         DEFAULT_POLICY.writePolicyDefault.commitLevel = CommitLevel.COMMIT_MASTER;
         DEFAULT_POLICY.writePolicyDefault.recordExistsAction = RecordExistsAction.UPDATE;
     }
