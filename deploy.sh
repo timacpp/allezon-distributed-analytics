@@ -16,7 +16,7 @@ function deploy {
     sshpass -p "$PASSWORD" ssh "st101@st101$vm.rtb-lab.pl" "
         sudo docker pull $tag &&
         sudo docker rm -f $container >/dev/null 2>&1 &&
-        sudo docker run -d --net=host --name $container $tag"
+        sudo docker run -d --net=host --name $container --log-opt max-size=1GB $tag"
   done
 }
 
