@@ -17,6 +17,6 @@ public class UserTagsEventPublisher {
 
 	public void publish(UserTag userTag) {
 		logger.info("Publishing user tag={}", userTag);
-		kafkaTemplate.send("user-tags", userTag);
+		kafkaTemplate.send("user-tags", userTag.cookie(), userTag);
 	}
 }
