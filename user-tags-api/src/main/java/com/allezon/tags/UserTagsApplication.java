@@ -1,6 +1,8 @@
 package com.allezon.tags;
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.config.TopicConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +21,8 @@ public class UserTagsApplication {
 		return TopicBuilder.name("user-tags")
 				.partitions(2)
 				.replicas(2)
-				.compact()
+				.config(TopicConfig.RETENTION_MS_CONFIG, String.valueOf((12 * 60 * 60 * 1000)))
+				.config(TopicConfig.CLEANUP_POLICY_CONFIG, "delete")
 				.build();
 	}
 }
