@@ -51,7 +51,7 @@ public class AggregatesService {
     private List<List<String>> createRows(TimeRange timeRange, UserTag.Action action, List<AggregationOperator> operators, QueryFilter filter) {
         List<Instant> buckets = timeRange.getMinutesInBetween();
         List<String> keys = buckets.stream()
-                .map(minute -> minute.toString() + ":" + action + ":" + filter.toKey())
+                .map(minute -> minute.toString().replace("Z", "") + ":" + action + ":" + filter.toKey())
                 .toList();
 
         return StreamUtils.zip(buckets.stream(), aggregatesDao.batchGet(keys).stream(), Pair::of)
