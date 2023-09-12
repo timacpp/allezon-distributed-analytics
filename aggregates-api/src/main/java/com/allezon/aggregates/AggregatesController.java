@@ -4,6 +4,7 @@ import com.allezon.aggregates.domain.QueryFilter;
 import com.allezon.aggregates.domain.AggregatesWindow;
 import com.allezon.aggregates.domain.AggregationOperator;
 import com.allezon.core.domain.common.TimeRange;
+import com.allezon.core.domain.tag.Action;
 import com.allezon.core.domain.tag.UserTag;
 
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class AggregatesController {
     @PostMapping
     public ResponseEntity<AggregatesWindow> getAggregates(
             @RequestParam("time_range") String timeRange,
-            @RequestParam("action") UserTag.Action action,
+            @RequestParam("action") Action action,
             @RequestParam("aggregates") List<AggregationOperator> operators,
             @RequestParam(value = "origin", required = false) String origin,
             @RequestParam(value = "brand_id", required = false) String brandId,

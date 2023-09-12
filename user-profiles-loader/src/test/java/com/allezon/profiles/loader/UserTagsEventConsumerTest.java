@@ -1,6 +1,8 @@
 package com.allezon.profiles.loader;
 
 import com.allezon.core.dao.UserProfilesDao;
+import com.allezon.core.domain.tag.Action;
+import com.allezon.core.domain.tag.Device;
 import com.allezon.core.domain.tag.UserTag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,6 @@ public class UserTagsEventConsumerTest {
 	}
 
 	private UserTag buildUserTag() {
-		return new UserTag(Instant.now().toString(),"cookie123", "PL", UserTag.Device.PC, UserTag.Action.VIEW, "origin", null);
+		return new UserTag(Instant.now().toString(),"cookie123", "PL", Device.PC, Action.VIEW, "origin", null);
 	}
 }

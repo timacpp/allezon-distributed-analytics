@@ -60,7 +60,8 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
     public void process(Record<String, UserTag> record) {
         UserTag tag = record.value();
         Long price = Long.valueOf(tag.product().price());
-        String keyPrefix = tag.getTimeWithoutSeconds() + ":" + tag.action();
+        String bucket = tag.time().substring(0, 1 + tag.time().lastIndexOf(":")) + "00";
+        String keyPrefix = bucket + ":" + tag.action();
 
         for (String keySuffix : generatePossibleQueryFilterKeys(tag)) {
             String key = keyPrefix + ":" + keySuffix;

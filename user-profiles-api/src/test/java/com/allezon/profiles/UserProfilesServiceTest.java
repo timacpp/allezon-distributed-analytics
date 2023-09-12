@@ -3,6 +3,8 @@ package com.allezon.profiles;
 import com.allezon.core.dao.UserProfilesDao;
 import com.allezon.core.domain.common.TimeRange;
 import com.allezon.core.domain.profile.UserProfile;
+import com.allezon.core.domain.tag.Action;
+import com.allezon.core.domain.tag.Device;
 import com.allezon.core.domain.tag.UserTag;
 
 import org.junit.jupiter.api.Test;
@@ -60,6 +62,6 @@ public class UserProfilesServiceTest {
 	}
 
 	private UserTag buildUserTag(Instant time) {
-		return new UserTag(time.toString(), "cookie123", "PL", UserTag.Device.PC, UserTag.Action.VIEW, "origin", null);
+		return new UserTag(time.toString(), "cookie123", "PL", Device.PC, Action.VIEW, "origin", null);
 	}
 }

@@ -15,6 +15,7 @@ import com.allezon.aggregates.domain.AggregatesWindow;
 import com.allezon.aggregates.domain.QueryFilter;
 import com.allezon.aggregates.domain.AggregationOperator;
 import com.allezon.core.domain.common.TimeRange;
+import com.allezon.core.domain.tag.Action;
 import com.allezon.core.domain.tag.UserTag;
 
 @Component
@@ -23,7 +24,7 @@ public class AggregatesService {
     @Autowired
     private AggregatesDao aggregatesDao;
 
-    public AggregatesWindow query(TimeRange timeRange, UserTag.Action action, List<AggregationOperator> operators, QueryFilter filter) {
+    public AggregatesWindow query(TimeRange timeRange, Action action, List<AggregationOperator> operators, QueryFilter filter) {
         List<List<String>> rows = createRows(timeRange, action, operators, filter);
         List<String> columns = createColumns(operators, filter);
         return new AggregatesWindow(columns, rows);
@@ -48,7 +49,7 @@ public class AggregatesService {
         return columns;
     }
 
-    private List<List<String>> createRows(TimeRange timeRange, UserTag.Action action, List<AggregationOperator> operators, QueryFilter filter) {
+    private List<List<String>> createRows(TimeRange timeRange, Action action, List<AggregationOperator> operators, QueryFilter filter) {
         List<Instant> buckets = timeRange.getMinutesInBetween();
         List<String> keys = buckets.stream()
                 .map(minute -> minute.toString().replace("Z", "") + ":" + action + ":" + filter.toKey())
@@ -59,7 +60,7 @@ public class AggregatesService {
                 .toList();
     }
 
-    private List<String> createRow(Instant bucket, Aggregate aggregate, UserTag.Action action, List<AggregationOperator> operators, QueryFilter filter) {
+    private List<String> createRow(Instant bucket, Aggregate aggregate, Action action, List<AggregationOperator> operators, QueryFilter filter) {
         List<String> row = new ArrayList<>();
 
         row.add(bucket.toString().replace("Z", ""));
