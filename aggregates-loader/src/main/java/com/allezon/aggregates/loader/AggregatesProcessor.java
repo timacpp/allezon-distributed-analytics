@@ -12,6 +12,8 @@ import org.apache.kafka.streams.processor.api.ProcessorContext;
 import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.KeyValueIterator;
 import org.apache.kafka.streams.state.KeyValueStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.allezon.core.dao.AggregatesDao;
 import com.allezon.core.domain.aggregate.Aggregate;
@@ -19,6 +21,8 @@ import com.allezon.core.domain.tag.UserTag;
 
 public class AggregatesProcessor implements Processor<String, UserTag, String, Aggregate> {
     private static final int MAX_REQUESTS_PER_SAVE = 5000;
+
+    private static final Logger logger = LoggerFactory.getLogger(AggregatesProcessor.class);
 
     private final AggregatesDao aggregatesDao;
     private KeyValueStore<String, Long> countStore;
@@ -34,12 +38,19 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
         sumStore = context.getStateStore("sum");
 
         context.schedule(Duration.ofSeconds(5), PunctuationType.WALL_CLOCK_TIME, timestamp -> {
+            long reloadStart = System.currentTimeMillis();
+            String firstKey = null;
+            String lastKey = null;
             List<Aggregate> aggregates = new ArrayList<>();
 
             try (final KeyValueIterator<String, Long> iterator = countStore.all()) {
                 while (iterator.hasNext()) {
                     KeyValue<String, Long> entry = iterator.next();
                     Aggregate aggregate = new Aggregate(entry.key, sumStore.get(entry.key), entry.value);
+
+                    if (firstKey == null) {
+                        firstKey = entry.key;
+                    }
 
                     sumStore.put(entry.key, 0L);
                     countStore.put(entry.key, 0L);
@@ -48,9 +59,16 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
                     if (aggregates.size() == MAX_REQUESTS_PER_SAVE || !iterator.hasNext()) {
                         aggregatesDao.batchSave(aggregates);
                         aggregates.clear();
+
+                        if (!iterator.hasNext()) {
+                            lastKey = entry.key;
+                        }
                     }
                 }
             }
+
+            logger.info("Reloaded aggregates in {} seconds for keys from {} to {}",
+                    (System.currentTimeMillis() - reloadStart) / 1000, firstKey, lastKey);
         });
     }
 
