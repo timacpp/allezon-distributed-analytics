@@ -22,10 +22,9 @@ public class AggregatesDao extends AerospikeDao {
 
     public List<Aggregate> batchGet(List<String> keys) {
         return StreamUtils.zip(keys.stream(), getRecords(keys).stream(), (key, record) -> {
-            if (record == null) {
-                return new Aggregate(key, 0L, 0L);
-            }
-            return new Aggregate(key, record.getLong(SUM_BIN), record.getLong(COUNT_BIN));
+            long sum = record != null ?  record.getLong(SUM_BIN) : 0L;
+            long count = record != null ? record.getLong(COUNT_BIN) : 0L;
+            return new Aggregate(key, sum, count);
         }).toList();
     }
 
