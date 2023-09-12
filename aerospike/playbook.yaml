@@ -65,4 +65,4 @@
     - name: Increase batch request queue
       become: true
       become_user: root
-      command: docker exec -ti aerospike asinfo -v "set-config:context=service;batch-max-buffers-per-queue=8192"
+      command: asinfo -v "set-config:context=service;batch-max-buffers-per-queue=8192"
