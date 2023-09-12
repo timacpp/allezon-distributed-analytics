@@ -41,12 +41,15 @@ network {
 
 namespace allezon {
 	replication-factor 2
-	memory-size 7G
+	memory-size 8G
     nsup-period 15
 
     stop-writes-pct 92
     high-water-memory-pct 90
     high-water-disk-pct 90
 
-	storage-engine memory
+	storage-engine device {
+        file /usr/share/aerospike/allezon
+    	filesize 20G
+    }
 }
