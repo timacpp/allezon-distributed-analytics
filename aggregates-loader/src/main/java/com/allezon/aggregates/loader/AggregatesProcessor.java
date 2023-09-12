@@ -20,8 +20,8 @@ import com.allezon.core.domain.aggregate.Aggregate;
 import com.allezon.core.domain.tag.UserTag;
 
 public class AggregatesProcessor implements Processor<String, UserTag, String, Aggregate> {
-    private static final Logger logger = LoggerFactory.getLogger(AggregatesProcessor.class);
     private static final int MAX_REQUESTS_PER_SAVE = 4000;
+
     private final AggregatesDao aggregatesDao;
     private KeyValueStore<String, Long> countStore;
     private KeyValueStore<String, Long> sumStore;
