@@ -26,9 +26,9 @@ public class UserProfilesDao extends AerospikeDao {
 
     public UserProfile get(String cookie) {
         Record record = getRecord(cookie);
-        List<UserTag> views = UserTagCompressor.uncompress((List<byte[]>) record.getList(VIEWS_BIN));
-        List<UserTag> buys = UserTagCompressor.uncompress((List<byte[]>) record.getList(BUYS_BIN));
-        return new UserProfile(cookie, views, buys);
+        List<byte[]> views = record != null ? (List<byte[]>) record.getList(VIEWS_BIN) : List.of();
+        List<byte[]> buys = record != null ? (List<byte[]>) record.getList(BUYS_BIN) : List.of();
+        return new UserProfile(cookie, UserTagCompressor.uncompress(views), UserTagCompressor.uncompress(buys));
     }
 
     public void appendTag(UserTag userTag)  {
