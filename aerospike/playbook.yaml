@@ -64,5 +64,4 @@
 
     - name: Increase batch request queue
       become: true
-      become_user: root
       command: asinfo -v "set-config:context=service;batch-max-buffers-per-queue=8192"
