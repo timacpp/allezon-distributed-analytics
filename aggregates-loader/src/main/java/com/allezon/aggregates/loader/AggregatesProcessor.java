@@ -57,9 +57,11 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
                 }
             }
 
-            logger.info("Reloaded aggregates in {} seconds for keys from {} to {}",
-                    (System.currentTimeMillis() - reloadStart) / 1000, processedKeys.get(0),
-                    processedKeys.get(processedKeys.size() - 1));
+            if (!processedKeys.isEmpty()) {
+                logger.info("Reloaded aggregates in {} seconds for keys from {} to {}",
+                        (System.currentTimeMillis() - reloadStart) / 1000, processedKeys.get(0),
+                        processedKeys.get(processedKeys.size() - 1));
+            }
 
             for (String processedKey : processedKeys) {
                 sumStore.delete(processedKey);
