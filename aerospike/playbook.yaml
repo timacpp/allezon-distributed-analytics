@@ -24,15 +24,10 @@
         group: root
         mode: '0644'
 
-    - name: Remove previous container
-      become: true
-      become_user: root
-      command: docker rm -f aerospike
-
     - name: Run new container
       become: true
       become_user: root
-      command: docker run -d -v /opt/aerospike/etc/:/opt/aerospike/etc/ --name aerospike -p 3000-3002:3000-3002 --log-opt max-size=1GB aerospike/aerospike-server --config-file /opt/aerospike/etc/aerospike.conf
+      command: docker run -d --rm -v /opt/aerospike/etc/:/opt/aerospike/etc/ --name aerospike -p 3000-3002:3000-3002 --log-opt max-size=1GB aerospike/aerospike-server --config-file /opt/aerospike/etc/aerospike.conf
 
     - name: Increase batch request queue
       become: true
