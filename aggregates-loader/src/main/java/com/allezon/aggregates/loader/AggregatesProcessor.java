@@ -12,15 +12,13 @@ import org.apache.kafka.streams.processor.api.ProcessorContext;
 import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.KeyValueIterator;
 import org.apache.kafka.streams.state.KeyValueStore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.allezon.core.dao.AggregatesDao;
 import com.allezon.core.domain.aggregate.Aggregate;
 import com.allezon.core.domain.tag.UserTag;
 
 public class AggregatesProcessor implements Processor<String, UserTag, String, Aggregate> {
-    private static final int MAX_REQUESTS_PER_SAVE = 4000;
+    private static final int MAX_REQUESTS_PER_SAVE = 5000;
 
     private final AggregatesDao aggregatesDao;
     private KeyValueStore<String, Long> countStore;
@@ -35,7 +33,7 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
         countStore = context.getStateStore("count");
         sumStore = context.getStateStore("sum");
 
-        context.schedule(Duration.ofSeconds(15), PunctuationType.WALL_CLOCK_TIME, timestamp -> {
+        context.schedule(Duration.ofSeconds(5), PunctuationType.WALL_CLOCK_TIME, timestamp -> {
             List<Aggregate> aggregates = new ArrayList<>();
 
             try (final KeyValueIterator<String, Long> iterator = countStore.all()) {
