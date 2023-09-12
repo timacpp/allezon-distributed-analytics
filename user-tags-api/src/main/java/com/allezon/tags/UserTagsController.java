@@ -15,7 +15,9 @@ public class UserTagsController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void addUserTag(@RequestBody UserTag userTag) {
-		userTagEventsPublisher.publish(userTag);
+	public void addUserTag(@RequestBody(required = false) UserTag userTag) {
+		if (userTag != null) {
+			userTagEventsPublisher.publish(userTag);
+		}
 	}
 }
