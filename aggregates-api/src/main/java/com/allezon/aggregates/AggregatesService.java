@@ -63,6 +63,7 @@ public class AggregatesService {
         List<String> row = new ArrayList<>();
 
         row.add(bucket.toString().replace("Z", ""));
+        row.add(action.toString());
         if (filter.origin() != null) {
             row.add(filter.origin());
         }
