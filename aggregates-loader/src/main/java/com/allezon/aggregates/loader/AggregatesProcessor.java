@@ -39,36 +39,32 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
 
         context.schedule(Duration.ofSeconds(5), PunctuationType.WALL_CLOCK_TIME, timestamp -> {
             long reloadStart = System.currentTimeMillis();
-            String firstKey = null;
-            String lastKey = null;
             List<Aggregate> aggregates = new ArrayList<>();
+            List<String> processedKeys = new ArrayList<>();
 
             try (final KeyValueIterator<String, Long> iterator = countStore.all()) {
                 while (iterator.hasNext()) {
                     KeyValue<String, Long> entry = iterator.next();
                     Aggregate aggregate = new Aggregate(entry.key, sumStore.get(entry.key), entry.value);
 
-                    if (firstKey == null) {
-                        firstKey = entry.key;
-                    }
-
-                    sumStore.put(entry.key, 0L);
-                    countStore.put(entry.key, 0L);
+                    processedKeys.add(entry.key);
                     aggregates.add(aggregate);
 
                     if (aggregates.size() == MAX_REQUESTS_PER_SAVE || !iterator.hasNext()) {
                         aggregatesDao.batchSave(aggregates);
                         aggregates.clear();
-
-                        if (!iterator.hasNext()) {
-                            lastKey = entry.key;
-                        }
                     }
                 }
             }
 
             logger.info("Reloaded aggregates in {} seconds for keys from {} to {}",
-                    (System.currentTimeMillis() - reloadStart) / 1000, firstKey, lastKey);
+                    (System.currentTimeMillis() - reloadStart) / 1000, processedKeys.get(0),
+                    processedKeys.get(processedKeys.size() - 1));
+
+            for (String processedKey : processedKeys) {
+                sumStore.delete(processedKey);
+                countStore.delete(processedKey);
+            }
         });
     }
 
