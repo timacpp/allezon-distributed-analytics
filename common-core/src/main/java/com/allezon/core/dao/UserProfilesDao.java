@@ -5,7 +5,9 @@ import com.aerospike.client.Value;
 import com.aerospike.client.cdt.ListOperation;
 import com.aerospike.client.cdt.ListReturnType;
 import com.allezon.core.domain.profile.UserProfile;
+import com.allezon.core.domain.tag.Action;
 import com.allezon.core.domain.tag.UserTag;
+import com.allezon.core.serialization.UserTagCompressor;
 
 import org.springframework.stereotype.Repository;
 
@@ -24,15 +26,15 @@ public class UserProfilesDao extends AerospikeDao {
 
     public UserProfile get(String cookie) {
         Record record = getRecord(cookie);
-        List<UserTag> views = record != null ? (List<UserTag>) record.getList(VIEWS_BIN) : List.of();
-        List<UserTag> buys = record != null ? (List<UserTag>) record.getList(BUYS_BIN) : List.of();
+        List<UserTag> views = UserTagCompressor.uncompress((List<byte[]>) record.getList(VIEWS_BIN));
+        List<UserTag> buys = UserTagCompressor.uncompress((List<byte[]>) record.getList(BUYS_BIN));
         return new UserProfile(cookie, views, buys);
     }
 
-    public void appendTag(UserTag userTag) {
-        String bin = userTag.action() == UserTag.Action.BUY ? BUYS_BIN : VIEWS_BIN;
+    public void appendTag(UserTag userTag)  {
+        String bin = userTag.action() == Action.BUY ? BUYS_BIN : VIEWS_BIN;
         operate(userTag.cookie(),
-                ListOperation.append(bin, Value.get(userTag)),
+                ListOperation.append(bin, Value.get(UserTagCompressor.compress(userTag))),
                 ListOperation.removeByIndexRange(bin, -MAX_TAGS_PER_ACTION, MAX_TAGS_PER_ACTION, ListReturnType.INVERTED));
     }
 }
