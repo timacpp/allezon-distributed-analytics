@@ -15,15 +15,7 @@ function deploy {
   for vm in "${@:2}"; do
     sshpass -p "$PASSWORD" ssh "st101@st101$vm.rtb-lab.pl" "
         sudo docker pull $tag &&
-        sudo docker run -d --rm \
-          --net=host \
-          --name $container \
-          --log-driver json-file \
-          --log-opt mode=non-blocking \
-          --log-opt max-buffer-size=30m \
-          --log-opt max-size=750m \
-          --log-opt max-file=3 \
-          $tag"
+        sudo docker run -d --rm --net=host --name $container --log-opt max-size=1g $tag"
   done
 }
 
