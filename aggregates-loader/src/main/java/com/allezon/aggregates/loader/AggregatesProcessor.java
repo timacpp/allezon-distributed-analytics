@@ -37,7 +37,7 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
         countStore = context.getStateStore("count");
         sumStore = context.getStateStore("sum");
 
-        context.schedule(Duration.ofSeconds(5), PunctuationType.WALL_CLOCK_TIME, timestamp -> {
+        context.schedule(Duration.ofSeconds(15), PunctuationType.WALL_CLOCK_TIME, timestamp -> {
             long reloadStart = System.currentTimeMillis();
             List<Aggregate> aggregates = new ArrayList<>();
             List<String> processedKeys = new ArrayList<>();
