@@ -25,6 +25,10 @@ if [[ -n $1 && -n $2 ]]; then
   exit
 fi
 
+if [[ -z $(which mvn) ]]; then
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
+
 mvn --file parent-project clean install -DskipTests
 deploy haproxy vm101
 deploy user-tags-api vm109 vm110

@@ -26,7 +26,6 @@ function setupJava {
   source "$HOME/.sdkman/bin/sdkman-init.sh"
   sdk install maven
   sdk install java 20-tem
-  source "$HOME/.sdkman/bin/sdkman-init.sh"
 }
 
 if [[ -n $1 ]]; then
@@ -41,4 +40,3 @@ setupNetwork
 setupProject docker-registry
 setupProject kafka
 setupProject aerospike
-setupJava
