@@ -84,7 +84,7 @@
       - name: Start registry
         become: true
         become_user: root
-        command: docker run -d --rm --restart=always --name registry --log-opt max-size=1GB -v /etc/docker/certs:/certs -e REGISTRY_HTTP_ADDR=0.0.0.0:443 -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/ca.crt -e REGISTRY_HTTP_TLS_KEY=/certs/ca.key -p 443:443 registry:2
+        command: docker run -d --rm --name registry --log-opt max-size=1GB -v /etc/docker/certs:/certs -e REGISTRY_HTTP_ADDR=0.0.0.0:443 -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/ca.crt -e REGISTRY_HTTP_TLS_KEY=/certs/ca.key -p 443:443 registry:2
 
 - name: Sync Push task - Executed on source host "{{groups['registry'][0]}}"
   hosts: docker
