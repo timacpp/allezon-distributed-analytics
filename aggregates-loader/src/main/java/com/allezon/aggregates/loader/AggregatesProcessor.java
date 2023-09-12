@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.processor.PunctuationType;
 import org.apache.kafka.streams.processor.api.Processor;
 import org.apache.kafka.streams.processor.api.ProcessorContext;
@@ -20,7 +21,7 @@ import com.allezon.core.domain.tag.UserTag;
 
 public class AggregatesProcessor implements Processor<String, UserTag, String, Aggregate> {
     private static final Logger logger = LoggerFactory.getLogger(AggregatesProcessor.class);
-
+    private static final int MAX_REQUESTS_PER_SAVE = 4000;
     private final AggregatesDao aggregatesDao;
     private KeyValueStore<String, Long> countStore;
     private KeyValueStore<String, Long> sumStore;
@@ -37,12 +38,15 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
         context.schedule(Duration.ofSeconds(15), PunctuationType.WALL_CLOCK_TIME, timestamp -> {
             List<Aggregate> aggregates = new ArrayList<>();
             try (final KeyValueIterator<String, Long> iterator = countStore.all()) {
-                iterator.forEachRemaining(entry ->
-                        aggregates.add(new Aggregate(entry.key, sumStore.get(entry.key), entry.value)));
-            }
-            if (!aggregates.isEmpty()) {
-                logger.info("Batch saving {} aggregates", aggregates.size());
-                aggregatesDao.batchSave(aggregates);
+                while (iterator.hasNext()) {
+                    KeyValue<String, Long> entry = iterator.next();
+                    Aggregate aggregate = new Aggregate(entry.key, sumStore.get(entry.key), entry.value);
+                    aggregates.add(aggregate);
+                    if (aggregates.size() == MAX_REQUESTS_PER_SAVE || !iterator.hasNext()) {
+                        aggregatesDao.batchSave(aggregates);
+                        aggregates.clear();
+                    }
+                }
             }
         });
     }
