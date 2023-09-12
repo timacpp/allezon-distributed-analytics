@@ -37,6 +37,7 @@ fi
 
 setupDependencies
 setupNetwork
+setupJava
 setupProject docker-registry
 setupProject kafka
 setupProject aerospike
