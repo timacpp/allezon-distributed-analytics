@@ -37,11 +37,16 @@ public class AggregatesProcessor implements Processor<String, UserTag, String, A
 
         context.schedule(Duration.ofSeconds(15), PunctuationType.WALL_CLOCK_TIME, timestamp -> {
             List<Aggregate> aggregates = new ArrayList<>();
+
             try (final KeyValueIterator<String, Long> iterator = countStore.all()) {
                 while (iterator.hasNext()) {
                     KeyValue<String, Long> entry = iterator.next();
                     Aggregate aggregate = new Aggregate(entry.key, sumStore.get(entry.key), entry.value);
+
+                    sumStore.put(entry.key, 0L);
+                    countStore.put(entry.key, 0L);
                     aggregates.add(aggregate);
+
                     if (aggregates.size() == MAX_REQUESTS_PER_SAVE || !iterator.hasNext()) {
                         aggregatesDao.batchSave(aggregates);
                         aggregates.clear();
