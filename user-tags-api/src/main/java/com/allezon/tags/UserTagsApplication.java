@@ -5,11 +5,15 @@ import org.apache.kafka.common.config.TopicConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.TopicBuilder;
 
+import com.allezon.core.dao.UserProfilesDao;
+
 @EnableKafka
 @SpringBootApplication
+@Import(UserProfilesDao.class)
 public class UserTagsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(UserTagsApplication.class, args);

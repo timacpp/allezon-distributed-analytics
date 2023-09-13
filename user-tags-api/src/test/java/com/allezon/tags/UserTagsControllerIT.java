@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.allezon.core.dao.UserProfilesDao;
 import com.allezon.core.domain.tag.UserTag;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,10 @@ public class UserTagsControllerIT {
 
 	@MockBean
 	private UserTagsEventPublisher userTagEventsPublisher;
+
+
+	@MockBean
+	private UserProfilesDao userProfilesDao;
 
 	@Test
 	void shouldPublishEventWhenAddingUserTag() throws Exception {
@@ -48,7 +53,9 @@ public class UserTagsControllerIT {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());
 
-		verify(userTagEventsPublisher).publish(eq(userTagFromJson(userTagJson)));
+		UserTag tag = userTagFromJson(userTagJson);
+		verify(userTagEventsPublisher).publish(eq(tag));
+		verify(userProfilesDao).appendTag(eq(tag));
 	}
 
 	private UserTag userTagFromJson(String json) throws JsonProcessingException {
