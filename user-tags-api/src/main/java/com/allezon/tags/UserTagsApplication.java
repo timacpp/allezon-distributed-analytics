@@ -20,7 +20,7 @@ public class UserTagsApplication {
 		return TopicBuilder.name("user-tags")
 				.partitions(2)
 				.replicas(2)
-				.config(TopicConfig.RETENTION_MS_CONFIG, String.valueOf((6 * 60 * 60 * 1000)))
+				.config(TopicConfig.RETENTION_MS_CONFIG, String.valueOf(60 * 60 * 1000))
 				.config(TopicConfig.CLEANUP_POLICY_CONFIG, "delete")
 				.build();
 	}
