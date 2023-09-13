@@ -5,6 +5,25 @@ Allezon Analytics Platform
 
 We are going to create a data-collection and analytics platform for a big online retailer Allezon. Users' actions on the Allezon site are sent to us as VIEW and BUY events containing information about the user and the product they interacted with. In order to solve Allezon's business use cases our platform has to collect these data and provide endpoints answering specific queries.
 
+# Deployment
+Create `.env` file with a single line `PASSWORD=<password>` and run `./setup.sh && ./deploy.sh`.
+
+`setup.sh` is used for:
+* Setting up network between virtual machines
+* Downloading dependencies, including Maven and Java
+* Creating Kafka and Aerospike clusters
+
+`deploy.sh` is used for:
+* Building JARs
+* Deploying HAProxy
+* Deploying 2 instances of each API:
+    * User tags API;
+    * User profiles API;
+    * Aggregates API;
+* Deploying 2 instances of Kafka workers:
+    * User profiles loader (Kafka Consumer);
+    * Aggregates loader (Kafka Streams Processor)
+
 # Use Cases
 
 Input events we are going to work with represent users' actions on the Allezon site and are called user tags. There are two types of actions, VIEW when the user visits some product page and BUY when they decide to make a purchase. Our primary goal is to collect those input events and then respond to the queries according to their specification. All communication with our platform should happen via HTTP requests.
